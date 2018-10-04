@@ -39,8 +39,8 @@ class DESEncryptor {
     // MARK: - Methods
     
     func encryptMessage() -> String {
-        makeInitialPermutation()
-        return message
+        //makeInitialPermutation()
+        return String(message.reversed())
     }
     
     func decryptMessage() -> String {

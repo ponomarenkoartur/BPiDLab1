@@ -10,11 +10,53 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // MARK: - Properties
+    
+    let desEncryptor = DESEncryptor(message: "")
+    
+    // MARK: - Outlets
+    
+    @IBOutlet weak var messageTextField: UITextField!
+    
+    @IBOutlet var resultLabels: [UILabel]!
+    
+    @IBOutlet weak var encryptedMessageLabel: UILabel!
+    @IBOutlet weak var decryptedMessageLabel: UILabel!
+    
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        hideKeyboardWhenTappedAround()
+        
+        resultLabels.forEach { $0.isHidden = true }
     }
-
-
+    
+    // MARK: - Actions
+    
+    @IBAction func enryptWasTapped(_ sender: UIButton) {
+        encryptAndDecryptMessage()
+    }
+    
+    // MARK: - Methods
+    
+    func encryptAndDecryptMessage() {
+        desEncryptor.message = messageTextField.text ?? ""
+        encryptedMessageLabel.text = desEncryptor.encryptMessage()
+        decryptedMessageLabel.text = desEncryptor.decryptMessage()
+        showResultLabels()
+    }
+    
+    func showResultLabels() {
+        resultLabels.forEach { $0.isHidden = false }
+    }
 }
 
+extension ViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        encryptAndDecryptMessage()
+        dismissKeyboard()
+        return true
+    }
+}

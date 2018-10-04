@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7523639621662B9E0082AAD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7523639521662B9E0082AAD4 /* AppDelegate.swift */; };
-		7523639821662B9E0082AAD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7523639721662B9E0082AAD4 /* ViewController.swift */; };
 		7523639B21662B9E0082AAD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7523639921662B9E0082AAD4 /* Main.storyboard */; };
 		7523639D21662BA10082AAD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7523639C21662BA10082AAD4 /* Assets.xcassets */; };
 		752363A021662BA10082AAD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7523639E21662BA10082AAD4 /* LaunchScreen.storyboard */; };
@@ -16,12 +15,13 @@
 		752363AD21662BCA0082AAD4 /* Custom operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363AA21662BC90082AAD4 /* Custom operators.swift */; };
 		752363AE21662BCA0082AAD4 /* DSAEncryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363AB21662BCA0082AAD4 /* DSAEncryptor.swift */; };
 		752363B021662BD70082AAD4 /* Int extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363AF21662BD70082AAD4 /* Int extension.swift */; };
+		752363B4216630070082AAD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363B3216630070082AAD4 /* ViewController.swift */; };
+		752363B6216635510082AAD4 /* UIViewController extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363B5216635510082AAD4 /* UIViewController extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7523639221662B9E0082AAD4 /* SecurityDESLab1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecurityDESLab1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7523639521662B9E0082AAD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7523639721662B9E0082AAD4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7523639A21662B9E0082AAD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7523639C21662BA10082AAD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7523639F21662BA10082AAD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -30,6 +30,8 @@
 		752363AA21662BC90082AAD4 /* Custom operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Custom operators.swift"; sourceTree = "<group>"; };
 		752363AB21662BCA0082AAD4 /* DSAEncryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSAEncryptor.swift; sourceTree = "<group>"; };
 		752363AF21662BD70082AAD4 /* Int extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int extension.swift"; sourceTree = "<group>"; };
+		752363B3216630070082AAD4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		752363B5216635510082AAD4 /* UIViewController extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,7 +49,6 @@
 			isa = PBXGroup;
 			children = (
 				7523639421662B9E0082AAD4 /* SecurityDESLab1 */,
-				752363A121662BA10082AAD4 /* Info.plist */,
 				7523639321662B9E0082AAD4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,6 +64,7 @@
 		7523639421662B9E0082AAD4 /* SecurityDESLab1 */ = {
 			isa = PBXGroup;
 			children = (
+				752363A121662BA10082AAD4 /* Info.plist */,
 				752363B221662BF00082AAD4 /* Other */,
 				752363B121662BDD0082AAD4 /* Controllers */,
 				752363A821662BAB0082AAD4 /* Extensions */,
@@ -85,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				752363AF21662BD70082AAD4 /* Int extension.swift */,
+				752363B5216635510082AAD4 /* UIViewController extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -92,7 +95,7 @@
 		752363B121662BDD0082AAD4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				7523639721662B9E0082AAD4 /* ViewController.swift */,
+				752363B3216630070082AAD4 /* ViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -179,9 +182,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				752363B4216630070082AAD4 /* ViewController.swift in Sources */,
 				752363AC21662BCA0082AAD4 /* Block.swift in Sources */,
+				752363B6216635510082AAD4 /* UIViewController extension.swift in Sources */,
 				752363AE21662BCA0082AAD4 /* DSAEncryptor.swift in Sources */,
-				7523639821662B9E0082AAD4 /* ViewController.swift in Sources */,
 				7523639621662B9E0082AAD4 /* AppDelegate.swift in Sources */,
 				752363B021662BD70082AAD4 /* Int extension.swift in Sources */,
 				752363AD21662BCA0082AAD4 /* Custom operators.swift in Sources */,

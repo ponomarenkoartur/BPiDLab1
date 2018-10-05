@@ -25,7 +25,7 @@ class DESEncryptor {
             if let blocksCache = blocksCache {
                 return blocksCache
             } else {
-                return getArrayOfBlocks64FromMessage()
+                return splitMessage(message, onBlocksWithByteCount: 8)
             }
         }
         set {
@@ -68,14 +68,14 @@ class DESEncryptor {
     
     // MARK: - Static Methods
     
-    private func getArrayOfBlocks64FromMessage() -> [Block] {
+    private func splitMessage(_ message: String, onBlocksWithByteCount blockSize: Int) -> [Block] {
         var blocks: [Block] = []
         let bytes = getBytesFromMessage()
-        let supplementedArrayOfBytes = DESEncryptor.supplementArrayOfBytes(bytes, toBitCountMultiplicityOf: 64)
+        let supplementedArrayOfBytes = DESEncryptor.supplementArrayOfBytes(bytes, toBitCountMultiplicityOf: blockSize)
         
         for i in 0..<(supplementedArrayOfBytes.count / 8) {
-            let eightBytes = Array(supplementedArrayOfBytes[i..<(i+8)])
-            if let block = Block(bytes: eightBytes) {
+            let blockBytes = Array(supplementedArrayOfBytes[i..<(i+blockSize)])
+            if let block = Block(bytes: blockBytes) {
                 blocks.append(block)
             } else {
                 print("Can't create Block from array of bytes")

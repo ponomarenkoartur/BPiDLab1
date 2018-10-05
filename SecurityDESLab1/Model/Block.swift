@@ -8,8 +8,7 @@ public class Block {
         return bytes.count * COUNT_OF_BITS_IN_BYTE
     }
     
-    public init?(bytes: [UInt8]) {
-        guard bytes.count > 0 else { return nil }
+    public init(bytes: [UInt8]) {
         self.bytes = bytes
     }
     

@@ -13,7 +13,7 @@
 		752363A021662BA10082AAD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7523639E21662BA10082AAD4 /* LaunchScreen.storyboard */; };
 		752363AC21662BCA0082AAD4 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363A921662BC90082AAD4 /* Block.swift */; };
 		752363AD21662BCA0082AAD4 /* Custom operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363AA21662BC90082AAD4 /* Custom operators.swift */; };
-		752363AE21662BCA0082AAD4 /* DSAEncryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363AB21662BCA0082AAD4 /* DSAEncryptor.swift */; };
+		752363AE21662BCA0082AAD4 /* DESEncryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363AB21662BCA0082AAD4 /* DESEncryptor.swift */; };
 		752363B021662BD70082AAD4 /* Int extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363AF21662BD70082AAD4 /* Int extension.swift */; };
 		752363B4216630070082AAD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363B3216630070082AAD4 /* ViewController.swift */; };
 		752363B6216635510082AAD4 /* UIViewController extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363B5216635510082AAD4 /* UIViewController extension.swift */; };
@@ -28,7 +28,7 @@
 		752363A121662BA10082AAD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		752363A921662BC90082AAD4 /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		752363AA21662BC90082AAD4 /* Custom operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Custom operators.swift"; sourceTree = "<group>"; };
-		752363AB21662BCA0082AAD4 /* DSAEncryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSAEncryptor.swift; sourceTree = "<group>"; };
+		752363AB21662BCA0082AAD4 /* DESEncryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DESEncryptor.swift; sourceTree = "<group>"; };
 		752363AF21662BD70082AAD4 /* Int extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int extension.swift"; sourceTree = "<group>"; };
 		752363B3216630070082AAD4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		752363B5216635510082AAD4 /* UIViewController extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController extension.swift"; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 			children = (
 				752363A921662BC90082AAD4 /* Block.swift */,
 				752363AA21662BC90082AAD4 /* Custom operators.swift */,
-				752363AB21662BCA0082AAD4 /* DSAEncryptor.swift */,
+				752363AB21662BCA0082AAD4 /* DESEncryptor.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -185,7 +185,7 @@
 				752363B4216630070082AAD4 /* ViewController.swift in Sources */,
 				752363AC21662BCA0082AAD4 /* Block.swift in Sources */,
 				752363B6216635510082AAD4 /* UIViewController extension.swift in Sources */,
-				752363AE21662BCA0082AAD4 /* DSAEncryptor.swift in Sources */,
+				752363AE21662BCA0082AAD4 /* DESEncryptor.swift in Sources */,
 				7523639621662B9E0082AAD4 /* AppDelegate.swift in Sources */,
 				752363B021662BD70082AAD4 /* Int extension.swift in Sources */,
 				752363AD21662BCA0082AAD4 /* Custom operators.swift in Sources */,

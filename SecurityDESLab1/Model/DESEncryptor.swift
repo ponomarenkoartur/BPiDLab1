@@ -4,7 +4,7 @@ class DESEncryptor {
     
     // MARK: - Constants
     
-    static let COUNT_OF_BIT_IN_BYTE = 8
+    static let countOfBitsInByte = 8
     static let initialPermutationTable = [
         58, 50, 42, 34, 26, 18, 10, 2, 60, 52, 44, 36, 28, 20, 12, 4,
         62, 54, 46, 38, 30, 22, 14, 6, 64, 56, 48, 40, 32, 24, 16, 8,
@@ -14,7 +14,11 @@ class DESEncryptor {
     
     // MARK: - Properties
     
-    var message: String
+    var message: String {
+        didSet {
+            blocksCache = nil
+        }
+    }
     private var blocksCache: [Block]?
     var blocks: [Block] {
         get {
@@ -39,7 +43,7 @@ class DESEncryptor {
     // MARK: - Methods
     
     func encryptMessage() -> String {
-        //makeInitialPermutation()
+        makeInitialPermutation()
         return String(message.reversed())
     }
     
@@ -49,7 +53,7 @@ class DESEncryptor {
     
     private func makeInitialPermutation() {
         for (blockIndex, block) in blocks.enumerated() {
-            guard let newBlock = Block(bytes: [UInt8](repeating: 0, count: 64)) else {
+            guard let newBlock = Block(bytes: [UInt8](repeating: 0, count: 8)) else {
                 print("Permutation can't be made")
                 return
             }
@@ -85,7 +89,7 @@ class DESEncryptor {
         var supplementedArray: [UInt8] = bytes
         let bitCount = bytes.count * 8
         
-        let countOfBytesToSupplement = count.getMultiple(greaterThan: bitCount) / DESEncryptor.COUNT_OF_BIT_IN_BYTE
+        let countOfBytesToSupplement = (count.getMultiple(greaterThan: bitCount) / DESEncryptor.countOfBitsInByte) - bytes.count
         
         for _ in 0..<countOfBytesToSupplement {
             supplementedArray.append(UInt8())
@@ -94,18 +98,11 @@ class DESEncryptor {
     }
     
     private static func supplementArrayOfBytes(_ bytes: [UInt8], toByteCountMultiplicityOf count: Int) -> [UInt8] {
-        var supplementedArray: [UInt8] = bytes
-        
-        let countOfBytesToSupplement = count.getMultiple(greaterThan: count)
-        
-        for _ in 0..<countOfBytesToSupplement {
-            supplementedArray.append(UInt8())
-        }
-        return supplementedArray
+        return DESEncryptor.supplementArrayOfBytes(bytes, toBitCountMultiplicityOf: count * countOfBitsInByte)
     }
     
     private func getBytesFromMessage() -> [UInt8] {
-        return Array(message.utf8)
+        return [UInt8](message.utf8)
     }
     
     private static func encryptBlock(_ block: Block, withKeys keys: [Int]) {

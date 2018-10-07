@@ -79,6 +79,17 @@ class SecurityDESLab1Tests: XCTestCase {
         print(slice)
         XCTAssert(slice == Block(bytes: [0b00001111]))
     }
+    
+    func testBlockLeftPartAndRightPart() {
+        var block = Block(bytes: [0b00000000, 0b11111111])
+        XCTAssert(block.leftPart == Block(bytes: [0b00000000]))
+        XCTAssert(block.rightPart == Block(bytes: [0b11111111]))
+        
+        block = Block(bytes: [0b00000001, 0b11111100], bitsCount: 14)!
+        
+        XCTAssert(block.leftPart == Block(bytes: [0b00000000], bitsCount: 7))
+        XCTAssert(block.rightPart == Block(bytes: [0b11111110], bitsCount: 7))
+    }
 
     func testPerformanceExample() {
         // This is an example of a performance test case.

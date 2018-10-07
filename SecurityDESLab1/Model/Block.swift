@@ -13,11 +13,11 @@ public class Block {
     
     
     var leftPart: Block {
-        return Block(bytes: Array(bytes[0..<(bytes.count / 2)]))
+        return self[(bitsCount / 2)..<bitsCount]
     }
     
     var rightPart: Block {
-        return Block(bytes: Array(bytes[(bytes.count / 2)..<bytes.count]))
+        return self[0..<(bitsCount / 2)]
     }
 
     // MARK: - Initialization

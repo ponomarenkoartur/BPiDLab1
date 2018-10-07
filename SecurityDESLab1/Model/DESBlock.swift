@@ -16,7 +16,7 @@ class DESBlock: Block {
     
     // MARK: - Methods
     
-    private func encrypted(withKeys keys: [Int]) -> Block? {
+    private func encrypted(withKeys keys: [DESBlock]) -> DESBlock? {
         var block = DESBlock(block: self)
         
         guard let initialPermutated = block.permutated(withPermutationTable: DESTable.initialPermutation) else { return nil }
@@ -26,7 +26,8 @@ class DESBlock: Block {
         var rightPart = DESBlock(block: block.rightPart)
         
         for j in 0..<16 {
-            block = DESBlock(block: leftPart ^ DESBlock.makeFeistailFunc(forBlock: rightPart, withKey: keys[j]))
+            guard let resultOfFeistailFunc = DESBlock.makeFeistailFunc(forBlock: rightPart, withKey: keys[j]) else { return nil }
+            block = DESBlock(block: leftPart ^ resultOfFeistailFunc)
             leftPart = rightPart
             rightPart = block
         }
@@ -52,11 +53,28 @@ class DESBlock: Block {
         return permutated
     }
     
+    public func sTransformated() -> DESBlock? {
+        // TODO: Implement the func
+        return DESBlock(bytes: [UInt8](repeating: 0, count: 64))
+    }
+    
     // MARK: - Static Methods
     
-    private static func makeFeistailFunc(forBlock block: DESBlock, withKey key: Int) -> DESBlock {
-        // TODO: Implement function
-        return DESBlock(bytes: [UInt8](repeating: 0, count: 64))
+    private static func makeFeistailFunc(forBlock block: DESBlock, withKey key: DESBlock) -> DESBlock? {
+        var block = block
+        
+        guard let eExtended = block.permutated(withPermutationTable: DESTable.eExtension) else { return nil }
+        block = eExtended
+        
+        block = DESBlock(block: block ^ key)
+        
+        guard let sTransformated = block.sTransformated() else { return nil }
+        block = sTransformated
+        
+        guard let pPermutated = block.permutated(withPermutationTable: DESTable.pPermutation) else { return nil }
+        block = pPermutated
+        
+        return block
     }
 
 }

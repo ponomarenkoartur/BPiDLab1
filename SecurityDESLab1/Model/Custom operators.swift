@@ -9,5 +9,5 @@ func ^(lhs: Block, rhs: Block) -> Block {
         let byte = greater.bytes[byteIndex] ^ smaller.bytes[byteIndex]
         bytes.append(byte)
     }
-    return Block(bytes: bytes)!
+    return Block(bytes: bytes)
 }

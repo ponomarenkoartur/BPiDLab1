@@ -53,10 +53,7 @@ class DESEncryptor {
     
     private func makeInitialPermutation() {
         for (blockIndex, block) in blocks.enumerated() {
-            guard let newBlock = Block(bytes: [UInt8](repeating: 0, count: 8)) else {
-                print("Permutation can't be made")
-                return
-            }
+            let newBlock = Block(bytes: [UInt8](repeating: 0, count: 8))
             for bitPositionInBlock in 0..<block.bitCount {
                 let positionInIPTable = DESEncryptor.initialPermutationTable[bitPositionInBlock] - 1
                 let newBitValue = block.getBit(atPosition: positionInIPTable)
@@ -75,11 +72,7 @@ class DESEncryptor {
         
         for i in 0..<(supplementedArrayOfBytes.count / 8) {
             let blockBytes = Array(supplementedArrayOfBytes[i..<(i+blockSize)])
-            if let block = Block(bytes: blockBytes) {
-                blocks.append(block)
-            } else {
-                print("Can't create Block from array of bytes")
-            }
+            blocks.append(Block(bytes: blockBytes))
         }
         
         return blocks
@@ -123,6 +116,6 @@ class DESEncryptor {
     
     private static func makeFerstailFunc(forBlock block: Block, andKey key: Int) -> Block {
         // TODO: Implement function
-        return Block(bytes: [UInt8](repeating: 0, count: 64))!
+        return Block(bytes: [UInt8](repeating: 0, count: 64))
     }
 }

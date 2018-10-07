@@ -10,6 +10,9 @@
 		751169402169D30E00162970 /* KeyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7511693F2169D30E00162970 /* KeyGenerator.swift */; };
 		751169422169D64900162970 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751169412169D64900162970 /* Constants.swift */; };
 		75116944216A310E00162970 /* BitValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75116943216A310E00162970 /* BitValue.swift */; };
+		7511694C216A33FC00162970 /* SecurityDESLab1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7511694B216A33FC00162970 /* SecurityDESLab1Tests.swift */; };
+		75116953216A355B00162970 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363A921662BC90082AAD4 /* Block.swift */; };
+		75116954216A36EC00162970 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751169412169D64900162970 /* Constants.swift */; };
 		7523639621662B9E0082AAD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7523639521662B9E0082AAD4 /* AppDelegate.swift */; };
 		7523639B21662B9E0082AAD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7523639921662B9E0082AAD4 /* Main.storyboard */; };
 		7523639D21662BA10082AAD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7523639C21662BA10082AAD4 /* Assets.xcassets */; };
@@ -24,10 +27,23 @@
 		756DC9EC2169C47500DF903B /* DESBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756DC9EB2169C47500DF903B /* DESBlock.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		7511694E216A33FC00162970 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7523638A21662B9E0082AAD4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7523639121662B9E0082AAD4;
+			remoteInfo = SecurityDESLab1;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		7511693F2169D30E00162970 /* KeyGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyGenerator.swift; sourceTree = "<group>"; };
 		751169412169D64900162970 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		75116943216A310E00162970 /* BitValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitValue.swift; sourceTree = "<group>"; };
+		75116949216A33FC00162970 /* SecurityDESLab1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SecurityDESLab1Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7511694B216A33FC00162970 /* SecurityDESLab1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityDESLab1Tests.swift; sourceTree = "<group>"; };
+		7511694D216A33FC00162970 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7523639221662B9E0082AAD4 /* SecurityDESLab1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecurityDESLab1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7523639521662B9E0082AAD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7523639A21662B9E0082AAD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -45,6 +61,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		75116946216A33FC00162970 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7523638F21662B9E0082AAD4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -55,10 +78,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7511694A216A33FC00162970 /* SecurityDESLab1Tests */ = {
+			isa = PBXGroup;
+			children = (
+				7511694B216A33FC00162970 /* SecurityDESLab1Tests.swift */,
+				7511694D216A33FC00162970 /* Info.plist */,
+			);
+			path = SecurityDESLab1Tests;
+			sourceTree = "<group>";
+		};
 		7523638921662B9E0082AAD4 = {
 			isa = PBXGroup;
 			children = (
 				7523639421662B9E0082AAD4 /* SecurityDESLab1 */,
+				7511694A216A33FC00162970 /* SecurityDESLab1Tests */,
 				7523639321662B9E0082AAD4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				7523639221662B9E0082AAD4 /* SecurityDESLab1.app */,
+				75116949216A33FC00162970 /* SecurityDESLab1Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -137,6 +171,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		75116948216A33FC00162970 /* SecurityDESLab1Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 75116950216A33FC00162970 /* Build configuration list for PBXNativeTarget "SecurityDESLab1Tests" */;
+			buildPhases = (
+				75116945216A33FC00162970 /* Sources */,
+				75116946216A33FC00162970 /* Frameworks */,
+				75116947216A33FC00162970 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7511694F216A33FC00162970 /* PBXTargetDependency */,
+			);
+			name = SecurityDESLab1Tests;
+			productName = SecurityDESLab1Tests;
+			productReference = 75116949216A33FC00162970 /* SecurityDESLab1Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		7523639121662B9E0082AAD4 /* SecurityDESLab1 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 752363A421662BA10082AAD4 /* Build configuration list for PBXNativeTarget "SecurityDESLab1" */;
@@ -164,6 +216,10 @@
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Artur;
 				TargetAttributes = {
+					75116948216A33FC00162970 = {
+						CreatedOnToolsVersion = 10.0;
+						TestTargetID = 7523639121662B9E0082AAD4;
+					};
 					7523639121662B9E0082AAD4 = {
 						CreatedOnToolsVersion = 10.0;
 					};
@@ -183,11 +239,19 @@
 			projectRoot = "";
 			targets = (
 				7523639121662B9E0082AAD4 /* SecurityDESLab1 */,
+				75116948216A33FC00162970 /* SecurityDESLab1Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		75116947216A33FC00162970 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7523639021662B9E0082AAD4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -201,6 +265,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		75116945216A33FC00162970 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7511694C216A33FC00162970 /* SecurityDESLab1Tests.swift in Sources */,
+				75116953216A355B00162970 /* Block.swift in Sources */,
+				75116954216A36EC00162970 /* Constants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7523638E21662B9E0082AAD4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -222,6 +296,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7511694F216A33FC00162970 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7523639121662B9E0082AAD4 /* SecurityDESLab1 */;
+			targetProxy = 7511694E216A33FC00162970 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		7523639921662B9E0082AAD4 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -242,6 +324,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		75116951216A33FC00162970 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6D4PZMC7DM;
+				INFOPLIST_FILE = SecurityDESLab1Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Artur.SecurityDESLab1Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SecurityDESLab1.app/SecurityDESLab1";
+			};
+			name = Debug;
+		};
+		75116952216A33FC00162970 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6D4PZMC7DM;
+				INFOPLIST_FILE = SecurityDESLab1Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Artur.SecurityDESLab1Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SecurityDESLab1.app/SecurityDESLab1";
+			};
+			name = Release;
+		};
 		752363A221662BA10082AAD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -399,6 +519,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		75116950216A33FC00162970 /* Build configuration list for PBXNativeTarget "SecurityDESLab1Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75116951216A33FC00162970 /* Debug */,
+				75116952216A33FC00162970 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		7523638D21662B9E0082AAD4 /* Build configuration list for PBXProject "SecurityDESLab1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

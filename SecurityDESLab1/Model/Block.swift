@@ -51,8 +51,8 @@ public class Block {
         
         var globalBitIndex = 0
         for block in blocks {
-            for bitIndex in 0..<block.bitsCount {
-                self[globalBitIndex] = self[bitIndex]
+            for bit in block {
+                self[globalBitIndex] = bit
                 globalBitIndex += 1
             }
         }

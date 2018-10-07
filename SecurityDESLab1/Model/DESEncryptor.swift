@@ -16,22 +16,11 @@ class DESEncryptor {
     
     var message: String {
         didSet {
-            blocksCache = nil
+            blocks = splitMessage(message, onBlocksWithByteCount: 8)
         }
     }
-    private var blocksCache: [Block]?
-    var blocks: [Block] {
-        get {
-            if let blocksCache = blocksCache {
-                return blocksCache
-            } else {
-                return splitMessage(message, onBlocksWithByteCount: 8)
-            }
-        }
-        set {
-            blocksCache = newValue
-        }
-    }
+    
+    lazy var blocks = splitMessage(message, onBlocksWithByteCount: 8)
     private let keys: [String] = []
     
     // MARK: Initialization

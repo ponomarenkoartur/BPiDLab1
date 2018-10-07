@@ -21,8 +21,7 @@ class DESBlock: Block {
         var globalBitIndex = 0
         for block in blocks {
             for bitIndex in 0..<block.bitsCount {
-                let bit = getBit(atIndex: bitIndex)!
-                self.setBit(atIndex: globalBitIndex, toValue: bit)
+                self[globalBitIndex] = self[bitIndex]
                 globalBitIndex += 1
             }
         }
@@ -60,8 +59,7 @@ class DESBlock: Block {
         let permutated = DESBlock(bytes: [UInt8](repeating: 0, count: 8))
         for bitPosition in 0..<permutatedSize {
             let positionInTable = DESEncryptor.initialPermutationTable[bitPosition] - 1
-            let newBitValue = self.getBit(atIndex: positionInTable)!
-            permutated.setBit(atIndex: bitPosition, toValue: newBitValue)
+            permutated[bitPosition] = self[positionInTable]!
         }
         
         return permutated

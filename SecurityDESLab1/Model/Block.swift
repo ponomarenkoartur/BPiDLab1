@@ -39,46 +39,47 @@ public class Block {
     }
 
     
-    // MARK: Methods
+    // MARK: Subscript
     
-    public func getBit(atIndex index: Int) -> BitValue? {
-        guard index >= 0, index < bitsCount else {
-            return nil
+    subscript(index: Int) -> BitValue? {
+        get {
+            guard index >= 0, index < bitsCount else {
+                return nil
+            }
+            
+            let byte = bytes[index / Constants.countOfBitsInByte]
+            let bitIndexInByte = index % Constants.countOfBitsInByte
+            
+            let bit = (byte >> bitIndexInByte) & 1
+            return bit == 1 ? .one : .zero
         }
-        
-        let byte = bytes[index / Constants.countOfBitsInByte]
-        let bitIndexInByte = index % Constants.countOfBitsInByte
-        
-        let bit = (byte >> bitIndexInByte) & 1
-        return bit == 1 ? .one : .zero
+        set {
+            guard index >= 0, let newValue = newValue, (newValue.rawValue == 1 || newValue.rawValue == 0) else { return }
+            
+            if index > bitsCount {
+                self.supplement(toBitCount: index)
+            }
+            
+            var byte = bytes[index / Constants.countOfBitsInByte]
+            let bitIndexInByte = index % Constants.countOfBitsInByte
+            
+            switch newValue {
+            case .one:
+                byte = byte | (0b00000001 << bitIndexInByte)
+            case .zero:
+                byte = byte & (0b11111110 << bitIndexInByte)
+            }
+            
+            bytes[index / Constants.countOfBitsInByte] = byte
+        }
     }
-    
-    public func setBit(atIndex index: Int, toValue value: BitValue) {
-        guard index >= 0, (value.rawValue == 1 || value.rawValue == 0) else {
-            return
-        }
         
-        if index > bitsCount {
-            self.supplement(toBitCount: index)
-        }
-        
-        var byte = bytes[index / Constants.countOfBitsInByte]
-        let bitIndexInByte = index % Constants.countOfBitsInByte
-        
-        switch value {
-        case .one:
-            byte = byte | (0b00000001 << bitIndexInByte)
-        case .zero:
-            byte = byte & (0b11111110 << bitIndexInByte)
-        }
-        
-        bytes[index / Constants.countOfBitsInByte] = byte
-    }
-    
     public enum BitValue: UInt8 {
         case zero = 0
         case one = 1
     }
+    
+    // MARK: Methods
     
     private func supplement(toBitCount bitsCount: Int) {
         let countOfBytesToSupplement = bytes.count - Block.getCountOfBytesToContain(bitsCount: bitsCount)

@@ -7,6 +7,8 @@ public class Block {
     private(set) var bytes: [UInt8]
     private(set) var bitsCount: Int
     
+    private var iterationsCount = 0
+    
     // MARK: - Copmuted Properties
     
     
@@ -93,3 +95,24 @@ public class Block {
         return Int((Float(bitsCount) / Float(Constants.countOfBitsInByte)).rounded(.up))
     }
 }
+
+public enum BitValue: UInt8, CustomStringConvertible {
+    case zero = 0
+    case one = 1
+    
+    public var description: String {
+        return self == .one ? "1" : "0"
+    }
+}
+
+extension Block: Sequence, IteratorProtocol {
+    public func next() -> BitValue?{
+        guard iterationsCount<bitsCount else {
+            return nil
+        }
+        iterationsCount += 1
+        
+        return self.getBit(atIndex: iterationsCount)
+    }
+}
+

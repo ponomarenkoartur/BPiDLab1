@@ -19,7 +19,7 @@ class KeyGenerator {
     // MARK: - Initialization
     
     init?(initialKey: DESBlock) {
-        guard initialKey.bitCount == 64 else { return nil }
+        guard initialKey.bitsCount == 64 else { return nil }
         self.initialKey = initialKey
     }
     

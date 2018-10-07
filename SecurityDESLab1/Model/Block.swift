@@ -1,18 +1,14 @@
 import Foundation
 
-let COUNT_OF_BITS_IN_BYTE: Int = 8
-
 public class Block {
     
     // MARK: Properties
     
     private(set) var bytes: [UInt8]
+    private(set) var bitsCount: Int
     
     // MARK: - Copmuted Properties
     
-    var bitCount: Int {
-        return bytes.count * COUNT_OF_BITS_IN_BYTE
-    }
     
     var leftPart: Block {
         return Block(bytes: Array(bytes[0..<(bytes.count / 2)]))
@@ -26,35 +22,66 @@ public class Block {
     
     public init(bytes: [UInt8]) {
         self.bytes = bytes
+        self.bitsCount = bytes.count * Constants.countOfBitsInByte
+    }
+    
+    public init?(bytes: [UInt8], bitsCount: Int) {
+        guard bitsCount <= bytes.count * Constants.countOfBitsInByte else { return nil }
+        self.bitsCount = bitsCount
+        let byteCount = Int((Float(bitsCount) / Float(Constants.countOfBitsInByte)).rounded(.up))
+        self.bytes = [UInt8](bytes[0..<byteCount])
     }
     
     // MARK: Methods
     
-    public func getBit(atPosition position: Int) -> UInt8? {
-        guard position >= 0, position < bytes.count * COUNT_OF_BITS_IN_BYTE else {
+    public func getBit(atIndex index: Int) -> BitValue? {
+        guard index >= 0, index < bitsCount else {
             return nil
         }
         
-        let byte = bytes[position / COUNT_OF_BITS_IN_BYTE]
-        let bitPositionInByte = position % COUNT_OF_BITS_IN_BYTE
+        let byte = bytes[index / Constants.countOfBitsInByte]
+        let bitIndexInByte = index % Constants.countOfBitsInByte
         
-        return (byte >> bitPositionInByte) & 1
+        let bit = (byte >> bitIndexInByte) & 1
+        return bit == 1 ? .one : .zero
     }
     
-    public func setBit(atPosition position: Int, toValue value: UInt8) {
-        guard position >= 0, position < bytes.count * COUNT_OF_BITS_IN_BYTE, (value == 1 || value == 0) else {
+    public func setBit(atIndex index: Int, toValue value: BitValue) {
+        guard index >= 0, (value.rawValue == 1 || value.rawValue == 0) else {
             return
         }
         
-        var byte = bytes[position / COUNT_OF_BITS_IN_BYTE]
-        let bitPositionInByte = position % COUNT_OF_BITS_IN_BYTE
-        
-        if value == 1 {
-            byte = byte | (0b00000001 << bitPositionInByte)
-        } else {
-            byte = byte & (0b11111110 << bitPositionInByte)
+        if index > bitsCount {
+            self.supplement(toBitCount: index)
         }
         
-        bytes[position / COUNT_OF_BITS_IN_BYTE] = byte
+        var byte = bytes[index / Constants.countOfBitsInByte]
+        let bitIndexInByte = index % Constants.countOfBitsInByte
+        
+        switch value {
+        case .one:
+            byte = byte | (0b00000001 << bitIndexInByte)
+        case .zero:
+            byte = byte & (0b11111110 << bitIndexInByte)
+        }
+        
+        bytes[index / Constants.countOfBitsInByte] = byte
+    }
+    
+    public enum BitValue: UInt8 {
+        case zero = 0
+        case one = 1
+    }
+    
+    private func supplement(toBitCount bitsCount: Int) {
+        let countOfBytesToSupplement = bytes.count - Block.getCountOfBytesToContain(bitsCount: bitsCount)
+        let newBytes = [UInt8](repeating: 0, count: countOfBytesToSupplement)
+        bytes.append(contentsOf: newBytes)
+    }
+    
+    // Static Methods
+    
+    private static func getCountOfBytesToContain(bitsCount: Int) -> Int {
+        return Int((Float(bitsCount) / Float(Constants.countOfBitsInByte)).rounded(.up))
     }
 }

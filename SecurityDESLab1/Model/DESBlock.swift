@@ -38,15 +38,15 @@ class DESBlock: Block {
     }
     
     public func permutated(withPermutationTable permutationTable: [Int]) -> DESBlock? {
-        guard let maxIndex = permutationTable.max(), maxIndex <= self.bitCount else {
+        guard let maxIndex = permutationTable.max(), maxIndex <= self.bitsCount else {
             return nil
         }
         let permutatedSize = permutationTable.count
         let permutated = DESBlock(bytes: [UInt8](repeating: 0, count: 8))
         for bitPosition in 0..<permutatedSize {
             let positionInTable = DESEncryptor.initialPermutationTable[bitPosition] - 1
-            let newBitValue = self.getBit(atPosition: positionInTable)!
-            permutated.setBit(atPosition: bitPosition, toValue: newBitValue)
+            let newBitValue = self.getBit(atIndex: positionInTable)!
+            permutated.setBit(atIndex: bitPosition, toValue: newBitValue)
         }
         
         return permutated

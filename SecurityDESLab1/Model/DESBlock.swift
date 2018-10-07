@@ -7,20 +7,35 @@
 //
 
 class DESBlock: Block {
-    private func encryptedBlock(withKeys keys: [Int]) -> Block {
-        var leftPart = self.leftPart
-        var rightPart = self.rightPart
+    
+    // MARK: - Initialization
+    
+    convenience init(block: Block) {
+        self.init(bytes: block.bytes)
+    }
+    
+    // MARK: - Methods
+    
+    private func encrypted(withKeys keys: [Int]) -> Block {
+        var block = self
+        
+        var leftPart = DESBlock(block: block.leftPart)
+        var rightPart = DESBlock(block: block.rightPart)
         
         for j in 0..<16 {
-            let block = leftPart! ^ makeFerstailFunc(forBlock: rightPart!, andKey: keys[j])
+            block = DESBlock(block: leftPart ^ DESBlock.makeFerstailFunc(forBlock: rightPart, withKey: keys[j]))
             leftPart = rightPart
             rightPart = block
         }
+        
+        return block
     }
     
-    private func makeFerstailFunc(withKey key: Int) -> Block {
+    // MARK: - Static Methods
+    
+    private static func makeFerstailFunc(forBlock block: DESBlock, withKey key: Int) -> DESBlock {
         // TODO: Implement function
-        return Block(bytes: [UInt8](repeating: 0, count: 64))
+        return DESBlock(bytes: [UInt8](repeating: 0, count: 64))
     }
 
 }

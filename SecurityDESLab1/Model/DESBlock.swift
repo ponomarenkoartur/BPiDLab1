@@ -16,8 +16,11 @@ class DESBlock: Block {
     
     // MARK: - Methods
     
-    private func encrypted(withKeys keys: [Int]) -> Block {
+    private func encrypted(withKeys keys: [Int]) -> Block? {
         var block = DESBlock(block: self)
+        
+        guard let initialPermutated = block.permutated(withPermutationTable: DESTable.initialPermutation) else { return nil }
+        block = initialPermutated
         
         var leftPart = DESBlock(block: block.leftPart)
         var rightPart = DESBlock(block: block.rightPart)
@@ -27,6 +30,9 @@ class DESBlock: Block {
             leftPart = rightPart
             rightPart = block
         }
+        
+        guard let finalPermutated = block.permutated(withPermutationTable: DESTable.initialPermutation) else { return nil }
+        block = finalPermutated
         
         return block
     }

@@ -28,9 +28,16 @@ public class Block {
     public init?(bytes: [UInt8], bitsCount: Int) {
         guard bitsCount <= bytes.count * Constants.countOfBitsInByte else { return nil }
         self.bitsCount = bitsCount
-        let byteCount = Int((Float(bitsCount) / Float(Constants.countOfBitsInByte)).rounded(.up))
-        self.bytes = [UInt8](bytes[0..<byteCount])
+        let bytesCount = Block.getCountOfBytesToContain(bitsCount: bitsCount)
+        self.bytes = [UInt8](bytes[0..<bytesCount])
     }
+    
+    public init(bitsCount: Int) {
+        self.bitsCount = bitsCount
+        let bytesCount = Block.getCountOfBytesToContain(bitsCount: bitsCount)
+        self.bytes = [UInt8](repeating: 0, count: bytesCount)
+    }
+
     
     // MARK: Methods
     

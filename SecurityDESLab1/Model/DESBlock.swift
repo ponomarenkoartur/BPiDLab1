@@ -14,6 +14,20 @@ class DESBlock: Block {
         self.init(bytes: block.bytes)
     }
     
+    convenience init(blocks: [Block]) {
+        let bitsCount = blocks.reduce(0) { $0 + $1.bitsCount }
+        self.init(bitsCount: bitsCount)
+        
+        var globalBitIndex = 0
+        for block in blocks {
+            for bitIndex in 0..<block.bitsCount {
+                let bit = getBit(atIndex: bitIndex)!
+                self.setBit(atIndex: globalBitIndex, toValue: bit)
+                globalBitIndex += 1
+            }
+        }
+    }
+    
     // MARK: - Methods
     
     private func encrypted(withKeys keys: [DESBlock]) -> DESBlock? {

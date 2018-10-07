@@ -75,11 +75,6 @@ public class Block {
             bytes[index / Constants.countOfBitsInByte] = byte
         }
     }
-        
-    public enum BitValue: UInt8 {
-        case zero = 0
-        case one = 1
-    }
     
     // MARK: Methods
     
@@ -118,5 +113,18 @@ extension Block: Equatable {
         }
         return true
     }
+    
+    public static func ^(lhs: Block, rhs: Block) -> Block {
+        let greater = lhs.bitsCount > rhs.bitsCount ? lhs : rhs
+        let smaller = lhs.bitsCount > rhs.bitsCount ? rhs : lhs
+        
+        var bytes = [UInt8]()
+        for byteIndex in 0..<smaller.bitsCount {
+            let byte = greater.bytes[byteIndex] ^ smaller.bytes[byteIndex]
+            bytes.append(byte)
+        }
+        return Block(bytes: bytes)
+    }
+
 }
 

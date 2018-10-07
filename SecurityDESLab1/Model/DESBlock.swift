@@ -8,8 +8,8 @@
 
 class DESBlock: Block {
     private func encryptedBlock(withKeys keys: [Int]) -> Block {
-        var leftPart = self.leftPart()
-        var rightPart = self.rightPart()
+        var leftPart = self.leftPart
+        var rightPart = self.rightPart
         
         for j in 0..<16 {
             let block = leftPart! ^ makeFerstailFunc(forBlock: rightPart!, andKey: keys[j])
@@ -18,7 +18,7 @@ class DESBlock: Block {
         }
     }
     
-    private static func makeFerstailFunc(forBlock block: Block, andKey key: Int) -> Block {
+    private func makeFerstailFunc(withKey key: Int) -> Block {
         // TODO: Implement function
         return Block(bytes: [UInt8](repeating: 0, count: 64))
     }

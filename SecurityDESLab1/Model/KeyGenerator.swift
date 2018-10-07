@@ -32,6 +32,9 @@ class KeyGenerator {
             let c = DESBlock(block: initialKey.leftPart).permutated(withPermutationTable: DESTable.cPermutation)
             let d = DESBlock(block: initialKey.rightPart).permutated(withPermutationTable: DESTable.dPermutation)
             
+            
+            
+            
             // TODO: Finish the implementation
         }
         

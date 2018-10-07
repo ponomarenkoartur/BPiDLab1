@@ -128,6 +128,26 @@ public class Block {
         bytes.append(contentsOf: newBytes)
     }
     
+    private func cycleShifted(by shift: Int, inDirection direction: ShiftDirection) -> DESBlock {
+        let shift = shift % self.bitsCount
+        let direction = (shift >= 0) ? direction : direction.reversed()
+        
+        let leftSlice: Block
+        let rightSlice: Block
+        
+        switch direction {
+        case .left:
+            leftSlice = self[(bitsCount-shift)..<bitsCount]
+            rightSlice = self[0..<(bitsCount-shift)]
+        case .right:
+            leftSlice = self[shift..<bitsCount]
+            rightSlice = self[0..<shift]
+        }
+        
+        return DESBlock(blocks: [leftSlice, rightSlice])
+    }
+
+    
     // Static Methods
     
     private static func getCountOfBytesToContain(bitsCount: Int) -> Int {
@@ -147,6 +167,8 @@ extension Block: Sequence, IteratorProtocol {
     }
 }
 
+infix operator <<<
+infix operator >>>
 extension Block: Equatable {
     public static func == (lhs: Block, rhs: Block) -> Bool {
         if lhs.bitsCount != rhs.bitsCount {
@@ -178,7 +200,14 @@ extension Block: Equatable {
         }
         return Block(bytes: bytes)
     }
+    
+    public static func <<<(lhs: Block, rhs: Int) -> Block {
+        return lhs.cycleShifted(by: rhs, inDirection: .left)
+    }
 
+    public static func >>>(lhs: Block, rhs: Int) -> Block {
+        return lhs.cycleShifted(by: rhs, inDirection: .right)
+    }
 }
 
 extension Block: CustomStringConvertible {

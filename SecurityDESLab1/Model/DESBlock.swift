@@ -50,26 +50,7 @@ class DESBlock: Block {
         // TODO: Implement the func
         return DESBlock(bytes: [UInt8](repeating: 0, count: 64))
     }
-    
-    public func cycleShifted(by shift: Int, inDirection direction: ShiftDirection) -> DESBlock {
-        let shift = shift % self.bitsCount
-        let direction = (shift >= 0) ? direction : direction.reversed()
         
-        let leftSlice: Block
-        let rightSlice: Block
-        
-        switch direction {
-        case .left:
-            leftSlice = self[0..<shift]
-            rightSlice = self[shift..<bitsCount]
-        case .right:
-            leftSlice = self[0..<(bitsCount-shift)]
-            rightSlice = self[(bitsCount-shift)..<bitsCount]
-        }
-        
-        return DESBlock(blocks: [rightSlice, leftSlice])
-    }
-    
     // MARK: - Static Methods
     
     private static func makeFeistailFunc(forBlock block: DESBlock, withKey key: DESBlock) -> DESBlock? {

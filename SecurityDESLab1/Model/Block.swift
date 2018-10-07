@@ -75,11 +75,6 @@ public class Block {
         bytes[index / Constants.countOfBitsInByte] = byte
     }
     
-    public enum BitValue: UInt8 {
-        case zero = 0
-        case one = 1
-    }
-    
     private func supplement(toBitCount bitsCount: Int) {
         let countOfBytesToSupplement = bytes.count - Block.getCountOfBytesToContain(bitsCount: bitsCount)
         let newBytes = [UInt8](repeating: 0, count: countOfBytesToSupplement)
@@ -92,3 +87,29 @@ public class Block {
         return Int((Float(bitsCount) / Float(Constants.countOfBitsInByte)).rounded(.up))
     }
 }
+
+public enum BitValue: UInt8 {
+    case zero = 0
+    case one = 1
+}
+
+class BlockIterator: IteratorProtocol {
+    var stopsAt: Int
+    var iterationsCount = 0
+    let block: Block
+    
+    init(block: Block){
+        stopsAt = block.bitsCount
+        self.block = block
+    }
+    
+    func next() -> BitValue?{
+        guard iterationsCount<stopsAt else {
+            return nil
+        }
+        iterationsCount += 1
+        
+        return block.getBit(atIndex: iterationsCount)
+    }
+}
+

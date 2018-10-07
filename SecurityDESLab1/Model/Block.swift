@@ -107,3 +107,16 @@ extension Block: Sequence, IteratorProtocol {
     }
 }
 
+extension Block: Equatable {
+    public static func == (lhs: Block, rhs: Block) -> Bool {
+        if lhs.bitsCount != rhs.bitsCount {
+            return false
+        }
+        
+        for bitIndex in 0..<lhs.bitsCount {
+            if lhs[bitIndex] != rhs[bitIndex] { return false }
+        }
+        return true
+    }
+}
+

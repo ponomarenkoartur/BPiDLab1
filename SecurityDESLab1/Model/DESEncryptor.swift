@@ -97,25 +97,4 @@ class DESEncryptor {
     private func getBytesFromMessage() -> [UInt8] {
         return [UInt8](message.utf8)
     }
-    
-    private static func encryptBlock(_ block: Block, withKeys keys: [Int]) {
-        var leftPart = block.leftPart()
-        var rightPart = block.rightPart()
-        
-        guard leftPart != nil, rightPart != nil else {
-            print("Can't split block on two parts")
-            return
-        }
-        
-        for j in 0..<16 {
-            let block = leftPart! ^ makeFerstailFunc(forBlock: rightPart!, andKey: keys[j])
-            leftPart = rightPart
-            rightPart = block
-        }
-    }
-    
-    private static func makeFerstailFunc(forBlock block: Block, andKey key: Int) -> Block {
-        // TODO: Implement function
-        return Block(bytes: [UInt8](repeating: 0, count: 64))
-    }
 }

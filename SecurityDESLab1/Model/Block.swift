@@ -3,22 +3,32 @@ import Foundation
 let COUNT_OF_BITS_IN_BYTE: Int = 8
 
 public class Block {
+    
+    // MARK: Properties
+    
     private(set) var bytes: [UInt8]
+    
+    // MARK: - Copmuted Properties
+    
     var bitCount: Int {
         return bytes.count * COUNT_OF_BITS_IN_BYTE
     }
+    
+    var leftPart: Block {
+        return Block(bytes: Array(bytes[0..<(bytes.count / 2)]))
+    }
+    
+    var rightPart: Block {
+        return Block(bytes: Array(bytes[(bytes.count / 2)..<bytes.count]))
+    }
+
+    // MARK: - Initialization
     
     public init(bytes: [UInt8]) {
         self.bytes = bytes
     }
     
-    public func leftPart() -> Block? {
-        return Block(bytes: Array(bytes[0..<(bytes.count / 2)]))
-    }
-    
-    public func rightPart() -> Block? {
-        return Block(bytes: Array(bytes[(bytes.count / 2)..<bytes.count]))
-    }
+    // MARK: Methods
     
     public func getBit(atPosition position: Int) -> UInt8? {
         guard position >= 0, position < bytes.count * COUNT_OF_BITS_IN_BYTE else {

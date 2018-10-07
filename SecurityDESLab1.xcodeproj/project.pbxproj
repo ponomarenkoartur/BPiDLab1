@@ -18,6 +18,7 @@
 		752363B4216630070082AAD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363B3216630070082AAD4 /* ViewController.swift */; };
 		752363B6216635510082AAD4 /* UIViewController extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752363B5216635510082AAD4 /* UIViewController extension.swift */; };
 		756DC9EA2169C0A300DF903B /* DESTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756DC9E92169C0A300DF903B /* DESTable.swift */; };
+		756DC9EC2169C47500DF903B /* DESBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756DC9EB2169C47500DF903B /* DESBlock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		752363B3216630070082AAD4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		752363B5216635510082AAD4 /* UIViewController extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController extension.swift"; sourceTree = "<group>"; };
 		756DC9E92169C0A300DF903B /* DESTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DESTable.swift; sourceTree = "<group>"; };
+		756DC9EB2169C47500DF903B /* DESBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DESBlock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				752363A921662BC90082AAD4 /* Block.swift */,
+				756DC9EB2169C47500DF903B /* DESBlock.swift */,
 				752363AA21662BC90082AAD4 /* Custom operators.swift */,
 				752363AB21662BCA0082AAD4 /* DESEncryptor.swift */,
 			);
@@ -195,6 +198,7 @@
 			files = (
 				752363B4216630070082AAD4 /* ViewController.swift in Sources */,
 				752363AC21662BCA0082AAD4 /* Block.swift in Sources */,
+				756DC9EC2169C47500DF903B /* DESBlock.swift in Sources */,
 				752363B6216635510082AAD4 /* UIViewController extension.swift in Sources */,
 				752363AE21662BCA0082AAD4 /* DESEncryptor.swift in Sources */,
 				7523639621662B9E0082AAD4 /* AppDelegate.swift in Sources */,

@@ -68,27 +68,27 @@ public class Block {
             let countOfNotUsedBitInLastByte = fullBitCount - bitsCount
             
             let byteIndex = (fullBitCount - index - countOfNotUsedBitInLastByte - 1) / Constants.countOfBitsInByte
-            let bitIndexInByte = ((fullBitCount - index - countOfNotUsedBitInLastByte) % Constants.countOfBitsInByte)
+            let bitIndexInByte = (index + countOfNotUsedBitInLastByte) % Constants.countOfBitsInByte
             
             let byte = bytes[byteIndex]
             let bit = (byte >> bitIndexInByte) & 1
             return bit == 1 ? .one : .zero
         }
         set {
-            guard index >= 0, index < bitsCount, let newValue = newValue, (newValue.rawValue == 1 || newValue.rawValue == 0) else { return }
+            guard index >= 0, index < bitsCount, let newValue = newValue, (newValue.rawValue == 1 || newValue.rawValue == 0) else { fatalError("INDEX OUT OF RANGE") }
             
             let fullBitCount = bytes.count * Constants.countOfBitsInByte
             let countOfNotUsedBitInLastByte = fullBitCount - bitsCount
             
             let byteIndex = (fullBitCount - index - countOfNotUsedBitInLastByte - 1) / Constants.countOfBitsInByte
-            let bitIndexInByte = ((fullBitCount - index - countOfNotUsedBitInLastByte) % Constants.countOfBitsInByte)
+            let bitIndexInByte = (index + countOfNotUsedBitInLastByte) % Constants.countOfBitsInByte
 
             var byte = bytes[byteIndex]
             switch newValue {
             case .one:
                 byte = byte | (0b00000001 << bitIndexInByte)
             case .zero:
-                byte = byte & (0b11111110 << bitIndexInByte)
+                byte = byte & ~UInt8(0b00000001 << bitIndexInByte)
             }
             
             bytes[byteIndex] = byte
@@ -97,16 +97,28 @@ public class Block {
     
     subscript(range: Range<Int>) -> Block {
         get {
-            let sliceBitCount = range.endIndex - range.startIndex
-            let block = Block(bitsCount: sliceBitCount)
-            
+            let block = Block(bitsCount: range.count)
             for j in range {
                 block[j - range.startIndex] = self[j]
             }
-            
             return block
         }
+        set {
+            for j in range {
+                self[j - range.startIndex] = newValue[j]
+            }
+        }
     }
+
+    subscript(closedRange: ClosedRange<Int>) -> Block {
+        get {
+            return self[Range(closedRange)]
+        }
+        set {
+            self[Range(closedRange)] = newValue
+        }
+    }
+
     
     // MARK: Methods
     
@@ -178,3 +190,4 @@ extension Block: CustomStringConvertible {
         return String(description.reversed())
     }
 }
+

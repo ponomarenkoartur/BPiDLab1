@@ -25,12 +25,13 @@ class SecurityDESLab1Tests: XCTestCase {
     
     func testBlockEquality() {
         XCTAssert(Block(bytes: [0b10100101, 0b01011010]) == Block(bytes: [0b10100101, 0b01011010]))
+        XCTAssert(Block(bytes: [0b10100101]) == Block(bytes: [0b10100101]))
         XCTAssert(Block(bytes: [0b10100101, 0b01010000], bitsCount: 12) == Block(bytes: [0b10100101, 0b01011111], bitsCount: 12))
         XCTAssert(Block(bytes: [0b11111111, 0b11111111, 0b1110000], bitsCount: 20) == Block(bytes: [0b11111111, 0b11111111, 0b11111111], bitsCount: 20))
     }
     
     func testBlockGetSubscript() {
-        let block = Block(bytes: [0b10101011, 0b01010101])
+        var block = Block(bytes: [0b10101011, 0b01010101])
         XCTAssert(block[0] == .one)
         XCTAssert(block[1] == .zero)
         XCTAssert(block[15] == .one)
@@ -38,14 +39,45 @@ class SecurityDESLab1Tests: XCTestCase {
         XCTAssert(block[8] == .one)
         XCTAssert(block[16] == nil)
         XCTAssert(block[-1] == nil)
+        block = Block(bytes: [0b10101011])
+        XCTAssert(block[0] == .one)
+        XCTAssert(block[1] == .one)
+        XCTAssert(block[7] == .one)
     }
 
     func testBlockSetSubscript() {
-        let block = Block(bytes: [0b00010000, 0b11101111], bitsCount: 12)!
+        var block = Block(bytes: [0b00010000, 0b11101111], bitsCount: 12)!
         block[0] = .one
         block[8] = .zero
         XCTAssert(block[0] == .one)
         XCTAssert(block[8] == .zero)
+        
+        block = Block(bytes: [0b00000000])
+        block[0] = .one
+        block[3] = .one
+        block[7] = .one
+        XCTAssert(block[0] == .one)
+        XCTAssert(block[3] == .one)
+        XCTAssert(block[7] == .one)
+        XCTAssert(block == Block(bytes: [0b10001001]))
+        
+        block = Block(bytes: [0b00001111])
+        block[4] = .one
+        XCTAssert(block == Block(bytes: [0b00011111]))
+    }
+    
+    func testBlockRangeSubscript() {
+        let block = Block(bytes: [0b00000000, 0b11111111])
+        let slice = block[4..<12]
+        print(slice)
+        XCTAssert(slice == Block(bytes: [0b00001111]))
+    }
+    
+    func testBlockClosedRangeSubscript() {
+        let block = Block(bytes: [0b00000000, 0b11111111])
+        let slice = block[4...11]
+        print(slice)
+        XCTAssert(slice == Block(bytes: [0b00001111]))
     }
 
     func testPerformanceExample() {

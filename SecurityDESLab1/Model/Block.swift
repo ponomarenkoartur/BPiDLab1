@@ -96,15 +96,6 @@ public class Block {
     }
 }
 
-public enum BitValue: UInt8, CustomStringConvertible {
-    case zero = 0
-    case one = 1
-    
-    public var description: String {
-        return self == .one ? "1" : "0"
-    }
-}
-
 extension Block: Sequence, IteratorProtocol {
     public func next() -> BitValue?{
         guard iterationsCount<bitsCount else {
@@ -112,7 +103,7 @@ extension Block: Sequence, IteratorProtocol {
         }
         iterationsCount += 1
         
-        return self.getBit(atIndex: iterationsCount)
+        return self[iterationsCount]
     }
 }
 

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		751169402169D30E00162970 /* KeyGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7511693F2169D30E00162970 /* KeyGenerator.swift */; };
 		751169422169D64900162970 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751169412169D64900162970 /* Constants.swift */; };
+		75116944216A310E00162970 /* BitValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75116943216A310E00162970 /* BitValue.swift */; };
 		7523639621662B9E0082AAD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7523639521662B9E0082AAD4 /* AppDelegate.swift */; };
 		7523639B21662B9E0082AAD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7523639921662B9E0082AAD4 /* Main.storyboard */; };
 		7523639D21662BA10082AAD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7523639C21662BA10082AAD4 /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 /* Begin PBXFileReference section */
 		7511693F2169D30E00162970 /* KeyGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyGenerator.swift; sourceTree = "<group>"; };
 		751169412169D64900162970 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		75116943216A310E00162970 /* BitValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitValue.swift; sourceTree = "<group>"; };
 		7523639221662B9E0082AAD4 /* SecurityDESLab1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecurityDESLab1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7523639521662B9E0082AAD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7523639A21662B9E0082AAD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				752363AA21662BC90082AAD4 /* Custom operators.swift */,
 				752363AB21662BCA0082AAD4 /* DESEncryptor.swift */,
 				7511693F2169D30E00162970 /* KeyGenerator.swift */,
+				75116943216A310E00162970 /* BitValue.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				752363B4216630070082AAD4 /* ViewController.swift in Sources */,
+				75116944216A310E00162970 /* BitValue.swift in Sources */,
 				751169422169D64900162970 /* Constants.swift in Sources */,
 				752363AC21662BCA0082AAD4 /* Block.swift in Sources */,
 				756DC9EC2169C47500DF903B /* DESBlock.swift in Sources */,

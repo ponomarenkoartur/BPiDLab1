@@ -95,6 +95,19 @@ public class Block {
         }
     }
     
+    subscript(range: Range<Int>) -> Block {
+        get {
+            let sliceBitCount = range.endIndex - range.startIndex
+            let block = Block(bitsCount: sliceBitCount)
+            
+            for j in range {
+                block[j - range.startIndex] = self[j]
+            }
+            
+            return block
+        }
+    }
+    
     // MARK: Methods
     
     private func supplement(toBitCount bitsCount: Int) {

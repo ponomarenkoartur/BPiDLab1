@@ -62,26 +62,28 @@ public class Block {
     
     subscript(index: Int) -> BitValue? {
         get {
-            guard index >= 0, index < bitsCount else {
-                return nil
-            }
+            guard index >= 0, index < bitsCount else { return nil }
             
-            let byte = bytes[index / Constants.countOfBitsInByte]
-            let bitIndexInByte = index % Constants.countOfBitsInByte
+            let fullBitCount = bytes.count * Constants.countOfBitsInByte
+            let countOfNotUsedBitInLastByte = fullBitCount - bitsCount
             
+            let byteIndex = (fullBitCount - index - countOfNotUsedBitInLastByte - 1) / Constants.countOfBitsInByte
+            let bitIndexInByte = ((fullBitCount - index - countOfNotUsedBitInLastByte) % Constants.countOfBitsInByte)
+            
+            let byte = bytes[byteIndex]
             let bit = (byte >> bitIndexInByte) & 1
             return bit == 1 ? .one : .zero
         }
         set {
-            guard index >= 0, let newValue = newValue, (newValue.rawValue == 1 || newValue.rawValue == 0) else { return }
+            guard index >= 0, index < bitsCount, let newValue = newValue, (newValue.rawValue == 1 || newValue.rawValue == 0) else { return }
             
-            if index > bitsCount {
-                self.supplement(toBitCount: index)
-            }
+            let fullBitCount = bytes.count * Constants.countOfBitsInByte
+            let countOfNotUsedBitInLastByte = fullBitCount - bitsCount
             
-            var byte = bytes[index / Constants.countOfBitsInByte]
-            let bitIndexInByte = index % Constants.countOfBitsInByte
-            
+            let byteIndex = (fullBitCount - index - countOfNotUsedBitInLastByte - 1) / Constants.countOfBitsInByte
+            let bitIndexInByte = ((fullBitCount - index - countOfNotUsedBitInLastByte) % Constants.countOfBitsInByte)
+
+            var byte = bytes[byteIndex]
             switch newValue {
             case .one:
                 byte = byte | (0b00000001 << bitIndexInByte)
@@ -89,7 +91,7 @@ public class Block {
                 byte = byte & (0b11111110 << bitIndexInByte)
             }
             
-            bytes[index / Constants.countOfBitsInByte] = byte
+            bytes[byteIndex] = byte
         }
     }
     
@@ -110,7 +112,8 @@ public class Block {
 
 extension Block: Sequence, IteratorProtocol {
     public func next() -> BitValue?{
-        guard iterationsCount<bitsCount else {
+        guard iterationsCount < bitsCount else {
+            iterationsCount = 0
             return nil
         }
         iterationsCount += 1
@@ -125,7 +128,15 @@ extension Block: Equatable {
             return false
         }
         
-        for bitIndex in 0..<lhs.bitsCount {
+        if lhs === rhs { return true }
+        
+        // Compare all bytes except last
+        for byteIndex in 0..<(lhs.bytes.count - 1) {
+            if lhs.bytes[byteIndex] != rhs.bytes[byteIndex] { return false }
+        }
+        
+        // Compare bits of the last byte
+        for bitIndex in ((lhs.bytes.count - 1) * Constants.countOfBitsInByte)..<lhs.bitsCount {
             if lhs[bitIndex] != rhs[bitIndex] { return false }
         }
         return true
@@ -145,3 +156,12 @@ extension Block: Equatable {
 
 }
 
+extension Block: CustomStringConvertible {
+    public var description: String {
+        var description = ""
+        for bitIndex in 0..<bitsCount {
+            description += "\(self[bitIndex]!)"
+        }
+        return String(description.reversed())
+    }
+}

@@ -23,20 +23,29 @@ class SecurityDESLab1Tests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
-    func testBlockSubscript() {
-        var block = Block(bytes: [0b10101010, 0b01010101])
+    func testBlockEquality() {
+        XCTAssert(Block(bytes: [0b10100101, 0b01011010]) == Block(bytes: [0b10100101, 0b01011010]))
+        XCTAssert(Block(bytes: [0b10100101, 0b01010000], bitsCount: 12) == Block(bytes: [0b10100101, 0b01011111], bitsCount: 12))
+        XCTAssert(Block(bytes: [0b11111111, 0b11111111, 0b1110000], bitsCount: 20) == Block(bytes: [0b11111111, 0b11111111, 0b11111111], bitsCount: 20))
+    }
+    
+    func testBlockGetSubscript() {
+        let block = Block(bytes: [0b10101011, 0b01010101])
         XCTAssert(block[0] == .one)
         XCTAssert(block[1] == .zero)
         XCTAssert(block[15] == .one)
-        XCTAssert(block[10] == .zero)
+        XCTAssert(block[7] == .zero)
+        XCTAssert(block[8] == .one)
         XCTAssert(block[16] == nil)
         XCTAssert(block[-1] == nil)
-        
-        block = Block(bytes: [0b10101010, 0b11101111], bitsCount: 12)!
-        XCTAssert(block[0] == .zero)
-        
+    }
+
+    func testBlockSetSubscript() {
+        let block = Block(bytes: [0b00010000, 0b11101111], bitsCount: 12)!
         block[0] = .one
-        XCTAssert(block == Block(bytes: [0b10101010, 0b11110000], bitsCount: 12)!)
+        block[8] = .zero
+        XCTAssert(block[0] == .one)
+        XCTAssert(block[8] == .zero)
     }
 
     func testPerformanceExample() {

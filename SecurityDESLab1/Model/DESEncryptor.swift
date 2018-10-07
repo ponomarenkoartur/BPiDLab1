@@ -43,24 +43,11 @@ class DESEncryptor {
     // MARK: - Methods
     
     func encryptMessage() -> String {
-        makeInitialPermutation()
         return String(message.reversed())
     }
     
     func decryptMessage() -> String {
         return message
-    }
-    
-    private func makeInitialPermutation() {
-        for (blockIndex, block) in blocks.enumerated() {
-            let newBlock = Block(bytes: [UInt8](repeating: 0, count: 8))
-            for bitPositionInBlock in 0..<block.bitCount {
-                let positionInIPTable = DESEncryptor.initialPermutationTable[bitPositionInBlock] - 1
-                let newBitValue = block.getBit(atPosition: positionInIPTable)
-                newBlock.setBit(atPosition: bitPositionInBlock, toValue: newBitValue!)
-            }
-            blocks[blockIndex] = newBlock
-        }
     }
     
     // MARK: - Static Methods

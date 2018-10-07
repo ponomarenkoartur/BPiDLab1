@@ -26,7 +26,7 @@ class DESBlock: Block {
         var rightPart = DESBlock(block: block.rightPart)
         
         for j in 0..<16 {
-            block = DESBlock(block: leftPart ^ DESBlock.makeFerstailFunc(forBlock: rightPart, withKey: keys[j]))
+            block = DESBlock(block: leftPart ^ DESBlock.makeFeistailFunc(forBlock: rightPart, withKey: keys[j]))
             leftPart = rightPart
             rightPart = block
         }
@@ -54,7 +54,7 @@ class DESBlock: Block {
     
     // MARK: - Static Methods
     
-    private static func makeFerstailFunc(forBlock block: DESBlock, withKey key: Int) -> DESBlock {
+    private static func makeFeistailFunc(forBlock block: DESBlock, withKey key: Int) -> DESBlock {
         // TODO: Implement function
         return DESBlock(bytes: [UInt8](repeating: 0, count: 64))
     }

@@ -28,6 +28,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let block = Block(bytes: [0b11111111])
+        
+        for bit in block {
+            print(bit, terminator: "")
+        }
+        print()
+        
+        for bitIndex in 0..<block.bitsCount {
+            print(block[bitIndex]!, terminator: "")
+        }
+        print()
+        
         hideKeyboardWhenTappedAround()
         
         resultLabels.forEach { $0.isHidden = true }

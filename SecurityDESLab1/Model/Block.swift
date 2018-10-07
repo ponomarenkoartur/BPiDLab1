@@ -116,9 +116,9 @@ extension Block: Sequence, IteratorProtocol {
             iterationsCount = 0
             return nil
         }
+        let bit = self[iterationsCount]
         iterationsCount += 1
-        
-        return self[iterationsCount]
+        return bit
     }
 }
 

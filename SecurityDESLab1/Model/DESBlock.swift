@@ -58,7 +58,7 @@ class DESBlock: Block {
         let permutatedSize = permutationTable.count
         let permutated = DESBlock(bytes: [UInt8](repeating: 0, count: 8))
         for bitPosition in 0..<permutatedSize {
-            let positionInTable = DESEncryptor.initialPermutationTable[bitPosition] - 1
+            let positionInTable = permutationTable[bitPosition] - 1
             permutated[bitPosition] = self[positionInTable]!
         }
         

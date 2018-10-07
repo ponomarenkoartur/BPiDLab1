@@ -2,16 +2,6 @@ import Foundation
 
 class DESEncryptor {
     
-    // MARK: - Constants
-    
-    static let countOfBitsInByte = 8
-    static let initialPermutationTable = [
-        58, 50, 42, 34, 26, 18, 10, 2, 60, 52, 44, 36, 28, 20, 12, 4,
-        62, 54, 46, 38, 30, 22, 14, 6, 64, 56, 48, 40, 32, 24, 16, 8,
-        57, 49, 41, 33, 25, 17, 9,  1, 59, 51, 43, 35, 27, 19, 11, 3,
-        61, 53, 45, 37, 29, 21, 13, 5, 63, 55, 47, 39, 31, 23, 15, 7
-    ]
-    
     // MARK: - Properties
     
     var message: String {
@@ -58,7 +48,7 @@ class DESEncryptor {
         var supplementedArray: [UInt8] = bytes
         let bitCount = bytes.count * 8
         
-        let countOfBytesToSupplement = (count.getMultiple(greaterThan: bitCount) / DESEncryptor.countOfBitsInByte) - bytes.count
+        let countOfBytesToSupplement = (count.getMultiple(greaterThan: bitCount) / Constants.countOfBitsInByte) - bytes.count
         
         for _ in 0..<countOfBytesToSupplement {
             supplementedArray.append(UInt8())
@@ -67,7 +57,7 @@ class DESEncryptor {
     }
     
     private static func supplementArrayOfBytes(_ bytes: [UInt8], toByteCountMultiplicityOf count: Int) -> [UInt8] {
-        return DESEncryptor.supplementArrayOfBytes(bytes, toBitCountMultiplicityOf: count * countOfBitsInByte)
+        return DESEncryptor.supplementArrayOfBytes(bytes, toBitCountMultiplicityOf: count * Constants.countOfBitsInByte)
     }
     
     private func getBytesFromMessage() -> [UInt8] {

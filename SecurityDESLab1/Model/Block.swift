@@ -4,7 +4,7 @@ public class Block {
     
     // MARK: Properties
     
-    private(set) var bytes: [UInt8]
+    private var bytes: [UInt8]
     private(set) var bitsCount: Int
     
     private var iterationsCount = 0
@@ -27,6 +27,7 @@ public class Block {
         self.bitsCount = bytes.count * Constants.countOfBitsInByte
     }
     
+    
     public init?(bytes: [UInt8], bitsCount: Int) {
         guard bitsCount <= bytes.count * Constants.countOfBitsInByte else { return nil }
         self.bitsCount = bitsCount
@@ -40,6 +41,22 @@ public class Block {
         self.bytes = [UInt8](repeating: 0, count: bytesCount)
     }
 
+    public convenience init(block: Block) {
+        self.init(bytes: block.bytes)
+    }
+    
+    public convenience init(blocks: [Block]) {
+        let bitsCount = blocks.reduce(0) { $0 + $1.bitsCount }
+        self.init(bitsCount: bitsCount)
+        
+        var globalBitIndex = 0
+        for block in blocks {
+            for bitIndex in 0..<block.bitsCount {
+                self[globalBitIndex] = self[bitIndex]
+                globalBitIndex += 1
+            }
+        }
+    }
     
     // MARK: Subscript
     

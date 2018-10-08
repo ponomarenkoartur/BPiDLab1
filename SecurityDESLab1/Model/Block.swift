@@ -201,7 +201,7 @@ extension Block: Equatable {
         let smaller = lhs.bitsCount > rhs.bitsCount ? rhs : lhs
         
         var bytes = [UInt8]()
-        for byteIndex in 0..<smaller.bitsCount {
+        for byteIndex in 0..<smaller.bytes.count {
             let byte = greater.bytes[byteIndex] ^ smaller.bytes[byteIndex]
             bytes.append(byte)
         }

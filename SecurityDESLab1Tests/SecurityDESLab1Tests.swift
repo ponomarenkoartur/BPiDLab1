@@ -93,8 +93,9 @@ class SecurityDESLab1Tests: XCTestCase {
     
     func testDESBlockCycleShifted() {
         let block = Block(bytes: [0b00000000, 0b11111111])
-        XCTAssert((block <<< 4) == Block(bytes: [0b00001111, 0b11110000]))
-        XCTAssert((block >>> 4) == Block(bytes: [0b11110000, 0b00001111]))
+        XCTAssert(block <<< 4 == Block(bytes: [0b00001111, 0b11110000]))
+        XCTAssert(block >>> 4 == Block(bytes: [0b11110000, 0b00001111]))
+        XCTAssert(block >>> 8 == Block(bytes: [0b11111111, 0b00000000]))
     }
 
     func testPerformanceExample() {

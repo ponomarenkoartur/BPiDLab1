@@ -167,9 +167,13 @@ extension Block: Sequence, IteratorProtocol {
     }
 }
 
-infix operator <<<
+precedencegroup CycleShiftPrecedence {
+    associativity: left
+    higherThan: MultiplicationPrecedence
+}
+infix operator <<<: CycleShiftPrecedence
+infix operator >>>: CycleShiftPrecedence
 infix operator <<<=
-infix operator >>>
 infix operator >>>=
 extension Block: Equatable {
     public static func == (lhs: Block, rhs: Block) -> Bool {

@@ -141,16 +141,10 @@ class SecurityDESLab1Tests: XCTestCase {
     
     func testDESBlockСompress6BitsBlock() {
         let block = DESBlock(bytes: [0b00101100], bitsCount: 6)!
-        let compressed = DESBlock.compress6BitsBlock(block, To4BitsWithSTable: DESTable.sTransformation[0])!
+        let compressed = DESBlock.compress6BitsBlock(block, to4BitsWithSTable: DESTable.sTransformation[0])!
         XCTAssert(compressed == DESBlock(bytes: [0b00100000], bitsCount: 4)!, "Block: \(compressed)")
     }
     
-    func testDESBlockSTransformed() {
-        let block = DESBlock(bytes: [0b00101111, 0b11010011, 0b01010010, 0b11111101, 0b01000001, 0b011000011])
-        let sTransformed = block.sTransformed()!
-        let expected = DESBlock(bytes: [0b00101110, 0b10010010, 0b00110011, 0b10110001])
-        XCTAssert(sTransformed == expected, "Block: \(sTransformed)")
-    }
 
     func testPerformanceExample() {
         // This is an example of a performance test case.

@@ -119,6 +119,19 @@ class SecurityDESLab1Tests: XCTestCase {
         permutated = block.permutated(withPermutationTable: DESTable.initialKeyPermutation)!
         XCTAssert(permutated == DESBlock(bytes: [0b00000000, 0b00000000, 0b11111111, 0b11110110, 0b01100111, 0b10001000, 0b00001111]))
     }
+    
+    func testDESBlockSplittingOnBlocks() {
+        var block = DESBlock(bytes: [0b00110001, 0b10100101])
+        var blocks = block.splittingIntoBlocks(withSize: 8)
+        XCTAssert(blocks == [DESBlock(bytes: [0b00110001]), DESBlock(bytes: [0b10100101])], "Blocks: \(blocks.map { $0.description + " " })")
+        
+        blocks = block.splittingIntoBlocks(withSize: 3)
+        XCTAssert(blocks == [DESBlock(bytes: [0b00100000]), DESBlock(bytes: [0b10000000]), DESBlock(bytes: [0b01100000]), DESBlock(bytes: [0b01000000]), DESBlock(bytes: [0b01000000])], "Blocks: \(blocks.map { $0.description + " " })")
+        
+        block = DESBlock(bytes: [0b00110001])
+        blocks = block.splittingIntoBlocks(withSize: 3)
+        XCTAssert(blocks == [DESBlock(bytes: [0b00100000]), DESBlock(bytes: [0b10000000])], "Blocks: \(blocks.map { $0.description + " " })")
+    }
 
     func testPerformanceExample() {
         // This is an example of a performance test case.

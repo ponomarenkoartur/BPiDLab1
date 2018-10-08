@@ -67,16 +67,14 @@ class DESBlock: Block {
         return block
     }
     
-    public func splittingIntoBlocks(withSize blockSize: Int) -> [Block] {
-        var blocks: [Block] = []
+    public func splittingIntoBlocks(withSize blockSize: Int) -> [DESBlock] {
+        var blocks: [DESBlock] = []
+        let blocksCount = bitsCount / blockSize
         
-        var block = Block(bitsCount: blockSize)
-        for (bitIndex, bit) in self.enumerated() {
-            if bitIndex % 8 == 0, bitIndex != 0 {
-                blocks.append(block)
-                block = Block(bitsCount: blockSize)
-            }
-            block[bitIndex % 8] = bit
+        for j in 0..<blocksCount {
+            let startIndex = j * blockSize
+            let endIndex = startIndex + blockSize
+            blocks.append(DESBlock(block: self[startIndex..<endIndex]))
         }
         
         return blocks

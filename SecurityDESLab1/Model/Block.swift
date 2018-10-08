@@ -43,6 +43,7 @@ public class Block {
 
     public convenience init(block: Block) {
         self.init(bytes: block.bytes)
+        self.bitsCount = block.bitsCount
     }
     
     public convenience init(blocks: [Block]) {
@@ -223,10 +224,10 @@ extension Block: Equatable {
 extension Block: CustomStringConvertible {
     public var description: String {
         var description = ""
-        for bitIndex in 0..<bitsCount {
-            description += "\(self[bitIndex]!)"
+        for bit in self {
+            description += bit.description
         }
-        return String(description.reversed())
+        return description
     }
 }
 

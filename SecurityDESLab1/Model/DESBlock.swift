@@ -46,13 +46,13 @@ class DESBlock: Block {
         return permutated
     }
     
-    private func sTransformated() -> DESBlock? {
+    public func sTransformed() -> DESBlock? {
         guard self.bitsCount == 48 else { return nil }
         
         let sixBitsBlocks = self.splittingIntoBlocks(withSize: 6)
         var fourBitsBlocks: [DESBlock] = []
         for (blockIndex, block) in sixBitsBlocks.enumerated() {
-            guard let fourBitsBlock = DESBlock.compress6BitsBlock(block, To4BitsWithSTable: DESTable.sTransformation[blockIndex]) else { return nil }
+            guard let fourBitsBlock = DESBlock.compress6BitsBlock(block, to4BitsWithSTable: DESTable.sTransformation[blockIndex]) else { return nil }
             fourBitsBlocks.append(fourBitsBlock)
         }
         return DESBlock(blocks: fourBitsBlocks)
@@ -65,7 +65,7 @@ class DESBlock: Block {
         
         block = DESBlock(block: block ^ key)
         
-        guard let sTransformated = block.sTransformated() else { return nil }
+        guard let sTransformated = block.sTransformed() else { return nil }
         block = sTransformated
         
         guard let pPermutated = block.permutated(withPermutationTable: DESTable.pPermutation) else { return nil }
@@ -89,16 +89,23 @@ class DESBlock: Block {
     
     // MARK: - Static Methods
     
-    private static func compress6BitsBlock(_ block: DESBlock, To4BitsWithSTable sTable: [[Int]]) -> DESBlock? {
+    public static func compress6BitsBlock(_ block: DESBlock, to4BitsWithSTable sTable: [[Int]]) -> DESBlock? {
         guard block.bitsCount == 6 else { return nil }
         
-        let row = Int((block[0]!.rawValue << 1) | block[5]!.rawValue)
-        let column = Int((block[1]!.rawValue << 2) |
-                        (block[2]!.rawValue << 1) |
-                        (block[3]!.rawValue))
+        let sTableCoordinates = DESBlock.getSTableCoordinates(from6BitsBlock: block)
         
-        let transformedBlockBits = UInt8(sTable[row][column]) << 4
+        let transformedBlockBits = UInt8(sTable[sTableCoordinates.row][sTableCoordinates.column]) << 4
         return DESBlock(bytes: [transformedBlockBits], bitsCount: 4)
+    }
+    
+    public static func getSTableCoordinates(from6BitsBlock block: DESBlock) -> (row: Int, column: Int) {
+        let row = Int((block[0]!.rawValue << 1) | block[5]!.rawValue)
+        let column = Int((block[1]!.rawValue << 3) |
+            (block[2]!.rawValue << 2) |
+            (block[3]!.rawValue << 1) |
+            (block[4]!.rawValue))
+        
+        return (row, column)
     }
 
 }

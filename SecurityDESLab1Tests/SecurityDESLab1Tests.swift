@@ -126,11 +126,30 @@ class SecurityDESLab1Tests: XCTestCase {
         XCTAssert(blocks == [DESBlock(bytes: [0b00110001]), DESBlock(bytes: [0b10100101])], "Blocks: \(blocks.map { $0.description + " " })")
         
         blocks = block.splittingIntoBlocks(withSize: 3)
-        XCTAssert(blocks == [DESBlock(bytes: [0b00100000]), DESBlock(bytes: [0b10000000]), DESBlock(bytes: [0b01100000]), DESBlock(bytes: [0b01000000]), DESBlock(bytes: [0b01000000])], "Blocks: \(blocks.map { $0.description + " " })")
+        XCTAssert(blocks == [DESBlock(bytes: [0b00100000], bitsCount: 3), DESBlock(bytes: [0b10000000], bitsCount: 3), DESBlock(bytes: [0b01100000], bitsCount: 3), DESBlock(bytes: [0b01000000], bitsCount: 3), DESBlock(bytes: [0b01000000], bitsCount: 3)], "Blocks: \(blocks.map { $0.description + " " })")
         
         block = DESBlock(bytes: [0b00110001])
         blocks = block.splittingIntoBlocks(withSize: 3)
-        XCTAssert(blocks == [DESBlock(bytes: [0b00100000]), DESBlock(bytes: [0b10000000])], "Blocks: \(blocks.map { $0.description + " " })")
+        XCTAssert(blocks == [DESBlock(bytes: [0b00100000], bitsCount: 3), DESBlock(bytes: [0b10000000], bitsCount: 3)], "Blocks: \(blocks.map { $0.description + " " })")
+    }
+    
+    func testDESBlockGetSTableCoordinate() {
+        let block = DESBlock(bytes: [0b00101100], bitsCount: 6)!
+        let coordinates = DESBlock.getSTableCoordinates(from6BitsBlock: block)
+        XCTAssert(coordinates == (1, 5), "Coordinates: \(coordinates)")
+    }
+    
+    func testDESBlockСompress6BitsBlock() {
+        let block = DESBlock(bytes: [0b00101100], bitsCount: 6)!
+        let compressed = DESBlock.compress6BitsBlock(block, To4BitsWithSTable: DESTable.sTransformation[0])!
+        XCTAssert(compressed == DESBlock(bytes: [0b00100000], bitsCount: 4)!, "Block: \(compressed)")
+    }
+    
+    func testDESBlockSTransformed() {
+        let block = DESBlock(bytes: [0b00101111, 0b11010011, 0b01010010, 0b11111101, 0b01000001, 0b011000011])
+        let sTransformed = block.sTransformed()!
+        let expected = DESBlock(bytes: [0b00101110, 0b10010010, 0b00110011, 0b10110001])
+        XCTAssert(sTransformed == expected, "Block: \(sTransformed)")
     }
 
     func testPerformanceExample() {

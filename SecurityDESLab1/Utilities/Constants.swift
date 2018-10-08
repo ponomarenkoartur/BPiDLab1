@@ -8,4 +8,5 @@
 
 struct Constants {
     static let countOfBitsInByte = 8
+    static let maxBitIndexInByte = 7
 }

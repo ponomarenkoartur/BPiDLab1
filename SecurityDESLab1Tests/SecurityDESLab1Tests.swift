@@ -27,22 +27,23 @@ class SecurityDESLab1Tests: XCTestCase {
         XCTAssert(Block(bytes: [0b10100101, 0b01011010]) == Block(bytes: [0b10100101, 0b01011010]))
         XCTAssert(Block(bytes: [0b10100101]) == Block(bytes: [0b10100101]))
         XCTAssert(Block(bytes: [0b10100101, 0b01010000], bitsCount: 12) == Block(bytes: [0b10100101, 0b01011111], bitsCount: 12))
-        XCTAssert(Block(bytes: [0b11111111, 0b11111111, 0b1110000], bitsCount: 20) == Block(bytes: [0b11111111, 0b11111111, 0b11111111], bitsCount: 20))
+        XCTAssert(Block(bytes: [0b11111111, 0b11111111, 0b11110000], bitsCount: 20) == Block(bytes: [0b11111111, 0b11111111, 0b11111111], bitsCount: 20))
     }
     
     func testBlockGetSubscript() {
-        var block = Block(bytes: [0b10101011, 0b01010101])
+        var block = Block(bytes: [0b10101010, 0b10101010])
         XCTAssert(block[0] == .one)
         XCTAssert(block[1] == .zero)
-        XCTAssert(block[15] == .one)
+        XCTAssert(block[15] == .zero)
         XCTAssert(block[7] == .zero)
         XCTAssert(block[8] == .one)
         XCTAssert(block[16] == nil)
         XCTAssert(block[-1] == nil)
-        block = Block(bytes: [0b10101011])
+        
+        block = Block(bytes: [0b10101010])
         XCTAssert(block[0] == .one)
-        XCTAssert(block[1] == .one)
-        XCTAssert(block[7] == .one)
+        XCTAssert(block[1] == .zero)
+        XCTAssert(block[7] == .zero)
     }
 
     func testBlockSetSubscript() {
@@ -59,25 +60,25 @@ class SecurityDESLab1Tests: XCTestCase {
         XCTAssert(block[0] == .one)
         XCTAssert(block[3] == .one)
         XCTAssert(block[7] == .one)
-        XCTAssert(block == Block(bytes: [0b10001001]))
+        XCTAssert(block == Block(bytes: [0b10010001]))
         
-        block = Block(bytes: [0b00001111])
+        block = Block(bytes: [0b11110000])
         block[4] = .one
-        XCTAssert(block == Block(bytes: [0b00011111]))
+        XCTAssert(block == Block(bytes: [0b11111000]))
     }
     
     func testBlockRangeSubscript() {
         let block = Block(bytes: [0b00000000, 0b11111111])
         let slice = block[3..<11]
         print(slice)
-        XCTAssert(slice == Block(bytes: [0b00011111]))
+        XCTAssert(slice == Block(bytes: [0b00000111]))
     }
     
     func testBlockClosedRangeSubscript() {
         let block = Block(bytes: [0b00000000, 0b11111111])
-        let slice = block[4...11]
+        let slice = block[3...10]
         print(slice)
-        XCTAssert(slice == Block(bytes: [0b00001111]))
+        XCTAssert(slice == Block(bytes: [0b00000111]))
     }
     
     func testBlockLeftPartAndRightPart() {
@@ -93,9 +94,9 @@ class SecurityDESLab1Tests: XCTestCase {
     
     func testDESBlockCycleShifted() {
         let block = Block(bytes: [0b00000000, 0b11111111])
-        XCTAssert(block <<< 4 == Block(bytes: [0b00001111, 0b11110000]))
-        XCTAssert(block >>> 4 == Block(bytes: [0b11110000, 0b00001111]))
-        XCTAssert(block >>> 8 == Block(bytes: [0b11111111, 0b00000000]))
+        XCTAssert(block <<< 4 == Block(bytes: [0b00001111, 0b11110000]), "Block is: \(block)")
+        XCTAssert(block >>> 4 == Block(bytes: [0b11110000, 0b00001111]), "Block is: \(block)")
+        XCTAssert(block >>> 8 == Block(bytes: [0b11111111, 0b00000000]), "Block is: \(block)")
     }
     
     func testKeyGeneratorGetKeys() {
@@ -120,6 +121,7 @@ class SecurityDESLab1Tests: XCTestCase {
         
         block = DESBlock(bytes: [0b00110001, 0b00110010, 0b00110011, 0b00110100, 0b00110101, 0b00110110, 0b00110111, 0b00111000])
         permutated = block.permutated(withPermutationTable: DESTable.initialKeyPermutation)!
+        XCTAssert(permutated == DESBlock(bytes: [0b00000000, 0b00000000, 0b11111111, 0b11110110, 0b01100111, 0b10001000, 0b00001111]))
     }
 
     func testPerformanceExample() {

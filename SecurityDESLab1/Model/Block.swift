@@ -13,11 +13,11 @@ public class Block {
     
     
     var leftPart: Block {
-        return self[(bitsCount / 2)..<bitsCount]
+        return self[0..<(bitsCount / 2)]
     }
     
     var rightPart: Block {
-        return self[0..<(bitsCount / 2)]
+        return self[(bitsCount / 2)..<bitsCount]
     }
 
     // MARK: - Initialization
@@ -49,11 +49,11 @@ public class Block {
         let bitsCount = blocks.reduce(0) { $0 + $1.bitsCount }
         self.init(bitsCount: bitsCount)
         
-        var globalBitIndex = 0
+        var bitIndex = 0
         for block in blocks {
             for bit in block {
-                self[globalBitIndex] = bit
-                globalBitIndex += 1
+                self[bitIndex] = bit
+                bitIndex += 1
             }
         }
     }
@@ -64,25 +64,21 @@ public class Block {
         get {
             guard index >= 0, index < bitsCount else { return nil }
             
-            let fullBitCount = bytes.count * Constants.countOfBitsInByte
-            let countOfNotUsedBitInLastByte = fullBitCount - bitsCount
+            let byteIndex = index / Constants.countOfBitsInByte
+            let bitIndexInByte = Constants.maxBitIndexInByte - (index % Constants.countOfBitsInByte)
             
-            let byteIndex = (fullBitCount - index - countOfNotUsedBitInLastByte - 1) / Constants.countOfBitsInByte
-            let bitIndexInByte = (index + countOfNotUsedBitInLastByte) % Constants.countOfBitsInByte
-            
-            let byte = bytes[byteIndex]
+            let byte =  bytes[byteIndex]
             let bit = (byte >> bitIndexInByte) & 1
+            
             return bit == 1 ? .one : .zero
         }
         set {
-            guard index >= 0, index < bitsCount, let newValue = newValue, (newValue.rawValue == 1 || newValue.rawValue == 0) else { fatalError("INDEX OUT OF RANGE") }
+            guard index >= 0, index < bitsCount else { fatalError("INDEX OUT OF RANGE") }
+            guard let newValue = newValue else { fatalError("CAN'T ASSIGN BIT TO NIL") }
             
-            let fullBitCount = bytes.count * Constants.countOfBitsInByte
-            let countOfNotUsedBitInLastByte = fullBitCount - bitsCount
+            let byteIndex = index / Constants.countOfBitsInByte
+            let bitIndexInByte = Constants.maxBitIndexInByte - (index % Constants.countOfBitsInByte)
             
-            let byteIndex = (fullBitCount - index - countOfNotUsedBitInLastByte - 1) / Constants.countOfBitsInByte
-            let bitIndexInByte = (index + countOfNotUsedBitInLastByte) % Constants.countOfBitsInByte
-
             var byte = bytes[byteIndex]
             switch newValue {
             case .one:
@@ -137,14 +133,14 @@ public class Block {
         
         switch direction {
         case .left:
-            leftSlice = self[(bitsCount-shift)..<bitsCount]
-            rightSlice = self[0..<(bitsCount-shift)]
+            leftSlice = self[0..<shift]
+            rightSlice = self[shift..<bitsCount]
         case .right:
-            leftSlice = self[shift..<bitsCount]
-            rightSlice = self[0..<shift]
+            leftSlice = self[0..<(bitsCount-shift)]
+            rightSlice = self[(bitsCount-shift)..<bitsCount]
         }
         
-        return DESBlock(blocks: [leftSlice, rightSlice])
+        return DESBlock(blocks: [rightSlice, leftSlice])
     }
 
     

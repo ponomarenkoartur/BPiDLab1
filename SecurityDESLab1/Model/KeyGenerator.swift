@@ -12,10 +12,6 @@ class KeyGenerator {
     
     let initialKey: DESBlock
     
-    // MARK: - Computed Properties
-    
-    lazy var keys = getKeys()
-    
     // MARK: - Initialization
     
     init?(initialKey: DESBlock) {
@@ -25,7 +21,7 @@ class KeyGenerator {
     
     // MARK: - Methods
     
-    private func getKeys() -> [DESBlock] {
+    public func getKeys() -> [DESBlock] {
         var keys: [DESBlock] = []
         
         let initialPermutated = initialKey.permutated(withPermutationTable: DESTable.initialKeyPermutation)!

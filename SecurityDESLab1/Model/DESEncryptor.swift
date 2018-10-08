@@ -6,16 +6,21 @@ class DESEncryptor {
     
     var message: String {
         didSet {
-            blocks = splitMessage(message, onBlocksWithByteCount: 8)
+            blocks = splitMessageOnBlocks(withBitCount: 64)
         }
     }
-    
-    lazy var blocks = splitMessage(message, onBlocksWithByteCount: 8)
-    private let keys: [String] = []
+    var keyPhrase: String {
+        didSet {
+            keys = getKeys()
+        }
+    }
+    private lazy var blocks = splitMessageOnBlocks(withBitCount: 64)
+    private lazy var keys = getKeys()
     
     // MARK: Initialization
     
-    init(message: String) {
+    init(message: String, keyPhrase: String) {
+        self.keyPhrase = keyPhrase
         self.message = message
     }
     
@@ -29,14 +34,30 @@ class DESEncryptor {
         return message
     }
     
-    // MARK: - Static Methods
+    // MARK: - Private methods
+    
+    private func getKeys() -> [DESBlock]? {
+        let keyPhraseBytes = DESEncryptor.getBytes(fromString: keyPhrase)
+        guard let initialKey = DESBlock(bytes: keyPhraseBytes, bitsCount: 64) else {
+            return nil
+        }
+        let keyGenerator = KeyGenerator(initialKey: initialKey)
+        return keyGenerator?.getKeys()
+    }
+    
     
     private func splitMessageOnBlocks(withBitCount blockSize: Int) -> [DESBlock] {
-        let bytes = getBytesFromMessage()
+        let bytes = DESEncryptor.getBytes(fromString: self.message)
         let supplementedArrayOfBytes = DESEncryptor.supplementArrayOfBytes(bytes, toBitCountMultiplicityOf: blockSize)
         
         let blockOfAllBits = DESBlock(bytes: supplementedArrayOfBytes )
         return blockOfAllBits.splittingIntoBlocks(withSize: blockSize)
+    }
+    
+    // MARK: - Static Methods
+    
+    private static func getBytes(fromString string: String) -> [UInt8] {
+        return [UInt8](string.utf8)
     }
     
     private static func supplementArrayOfBytes(_ bytes: [UInt8], toBitCountMultiplicityOf count: Int) -> [UInt8] {
@@ -53,9 +74,5 @@ class DESEncryptor {
     
     private static func supplementArrayOfBytes(_ bytes: [UInt8], toByteCountMultiplicityOf count: Int) -> [UInt8] {
         return DESEncryptor.supplementArrayOfBytes(bytes, toBitCountMultiplicityOf: count * Constants.countOfBitsInByte)
-    }
-    
-    private func getBytesFromMessage() -> [UInt8] {
-        return [UInt8](message.utf8)
     }
 }

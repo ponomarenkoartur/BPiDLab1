@@ -10,7 +10,7 @@ class DESBlock: Block {
     
     // MARK: - Methods
     
-    private func encrypted(withKeys keys: [DESBlock]) -> DESBlock? {
+    public func encrypted(withKeys keys: [DESBlock]) -> DESBlock? {
         var block = DESBlock(block: self)
         
         guard let initialPermutated = block.permutated(withPermutationTable: DESTable.initialPermutation) else { return nil }

@@ -52,7 +52,7 @@ class DESEncryptor {
     }
     
     private func getDecryptedBlocks() -> [DESBlock] {
-        return blocks.compactMap { $0.decrypted(withKeys: keys!) }
+        return encryptedBlocks.compactMap { $0.decrypted(withKeys: keys!) }
     }
     
     private func splitMessageOnBlocks(withBitCount blockSize: Int) -> [DESBlock] {
@@ -68,11 +68,11 @@ class DESEncryptor {
         return [UInt8](string.utf8)
     }
     
-    private static func supplementArrayOfBytes(_ bytes: [UInt8], toBitCountMultiplicityOf count: Int) -> [UInt8] {
+    private static func supplementArrayOfBytes(_ bytes: [UInt8], toBitCountMultiplicityOf countMultiplicity: Int) -> [UInt8] {
         var supplementedArray: [UInt8] = bytes
         let bitCount = bytes.count * 8
         
-        let countOfBytesToSupplement = (count.getMultiple(greaterThan: bitCount) / Constants.countOfBitsInByte) - bytes.count
+        let countOfBytesToSupplement = (countMultiplicity.getMultiple(greaterThan: bitCount) / Constants.countOfBitsInByte) - bytes.count
         
         for _ in 0..<countOfBytesToSupplement {
             supplementedArray.append(UInt8())

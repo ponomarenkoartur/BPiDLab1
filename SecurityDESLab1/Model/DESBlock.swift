@@ -26,7 +26,7 @@ class DESBlock: Block {
             rightPart = block
         }
         
-        block = DESBlock(blocks: [leftPart, rightPart])
+        block = DESBlock(blocks: [rightPart, leftPart])
         
         guard let finalPermutated = block.permutated(withPermutationTable: DESTable.finalPermutation) else { return nil }
         block = finalPermutated
@@ -35,27 +35,7 @@ class DESBlock: Block {
     }
     
     public func decrypted(withKeys keys: [DESBlock]) -> DESBlock? {
-        var block = DESBlock(block: self)
-        
-        guard let finalPermutated = block.permutated(withPermutationTable: DESTable.finalPermutation) else { return nil }
-        block = finalPermutated
-        
-        var leftPart = DESBlock(block: block.leftPart)
-        var rightPart = DESBlock(block: block.rightPart)
-        
-        for j in 0..<16 {
-            guard let resultOfFeistailFunc = leftPart.applyingFeistailFunc(withKey: keys[j]) else { return nil }
-            block = DESBlock(block: rightPart ^ resultOfFeistailFunc)
-            rightPart = leftPart
-            leftPart = block
-        }
-        
-        block = DESBlock(blocks: [leftPart, rightPart])
-        
-        guard let initialPermutated = block.permutated(withPermutationTable: DESTable.initialPermutation) else { return nil }
-        block = initialPermutated
-        
-        return block
+        return encrypted(withKeys: keys.reversed())
     }
     
     public func permutated(withPermutationTable permutationTable: [Int]) -> DESBlock? {

@@ -46,9 +46,16 @@ class DESBlock: Block {
         return permutated
     }
     
-    public func sTransformated() -> DESBlock? {
-        // TODO: Implement the func
-        return DESBlock(bytes: [UInt8](repeating: 0, count: 64))
+    private func sTransformated() -> DESBlock? {
+        guard self.bitsCount == 48 else { return nil }
+        
+        let sixBitsBlocks = self.splittingIntoBlocks(withSize: 6)
+        var fourBitsBlocks: [DESBlock] = []
+        for (blockIndex, block) in sixBitsBlocks.enumerated() {
+            guard let fourBitsBlock = DESBlock.compress6BitsBlock(block, To4BitsWithSTable: DESTable.sTransformation[blockIndex]) else { return nil }
+            fourBitsBlocks.append(fourBitsBlock)
+        }
+        return DESBlock(blocks: fourBitsBlocks)
     }
     
     private func applyingFeistailFunc(withKey key: DESBlock) -> DESBlock? {
@@ -78,6 +85,20 @@ class DESBlock: Block {
         }
         
         return blocks
+    }
+    
+    // MARK: - Static Methods
+    
+    private static func compress6BitsBlock(_ block: DESBlock, To4BitsWithSTable sTable: [[Int]]) -> DESBlock? {
+        guard block.bitsCount == 6 else { return nil }
+        
+        let row = Int((block[0]!.rawValue << 1) | block[5]!.rawValue)
+        let column = Int((block[1]!.rawValue << 2) |
+                        (block[2]!.rawValue << 1) |
+                        (block[3]!.rawValue))
+        
+        let transformedBlockBits = UInt8(sTable[row][column]) << 4
+        return DESBlock(bytes: [transformedBlockBits], bitsCount: 4)
     }
 
 }

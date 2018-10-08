@@ -168,7 +168,9 @@ extension Block: Sequence, IteratorProtocol {
 }
 
 infix operator <<<
+infix operator <<<=
 infix operator >>>
+infix operator >>>=
 extension Block: Equatable {
     public static func == (lhs: Block, rhs: Block) -> Bool {
         if lhs.bitsCount != rhs.bitsCount {
@@ -204,9 +206,17 @@ extension Block: Equatable {
     public static func <<<(lhs: Block, rhs: Int) -> Block {
         return lhs.cycleShifted(by: rhs, inDirection: .left)
     }
+    
+    public static func <<<=(lhs: inout Block, rhs: Int) {
+        lhs = lhs <<< rhs
+    }
 
     public static func >>>(lhs: Block, rhs: Int) -> Block {
         return lhs.cycleShifted(by: rhs, inDirection: .right)
+    }
+    
+    public static func >>>=(lhs: inout Block, rhs: Int) {
+        lhs = lhs >>> rhs
     }
 }
 

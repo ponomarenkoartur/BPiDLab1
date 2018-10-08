@@ -92,11 +92,9 @@ class SecurityDESLab1Tests: XCTestCase {
     }
     
     func testDESBlockCycleShifted() {
-        let block = DESBlock(bytes: [0b00000000, 0b11111111])
-        let shifterLeftBy4 = block.cycleShifted(by: 4, inDirection: .left)
-        let shifterRightBy4 = block.cycleShifted(by: 4, inDirection: .right)
-        XCTAssert(shifterLeftBy4 == Block(bytes: [0b00001111, 0b11110000]))
-        XCTAssert(shifterRightBy4 == Block(bytes: [0b11110000, 0b00001111]))
+        let block = Block(bytes: [0b00000000, 0b11111111])
+        XCTAssert((block <<< 4) == Block(bytes: [0b00001111, 0b11110000]))
+        XCTAssert((block >>> 4) == Block(bytes: [0b11110000, 0b00001111]))
     }
 
     func testPerformanceExample() {

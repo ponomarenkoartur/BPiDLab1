@@ -27,7 +27,8 @@ class DESEncryptor {
     // MARK: - Methods
     
     func encryptMessage() -> String {
-        return String(message.reversed())
+        let encryptedBlocks = blocks.compactMap { $0.encrypted(withKeys: keys!) }
+        return encryptedBlocks.compactMap { $0.convertToString(encoding: .utf8) }.reduce("") { $0 + $1 }
     }
     
     func decryptMessage() -> String {

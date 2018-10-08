@@ -119,6 +119,10 @@ public class Block {
     
     // MARK: Methods
     
+    public func convertToString(encoding: String.Encoding) -> String? {
+        return String(bytes: self.bytes, encoding: encoding)
+    }
+    
     private func supplement(toBitCount bitsCount: Int) {
         let countOfBytesToSupplement = bytes.count - Block.getCountOfBytesToContain(bitsCount: bitsCount)
         let newBytes = [UInt8](repeating: 0, count: countOfBytesToSupplement)

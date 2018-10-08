@@ -99,10 +99,6 @@ class SecurityDESLab1Tests: XCTestCase {
         XCTAssert(block >>> 8 == Block(bytes: [0b11111111, 0b00000000]), "Block is: \(block)")
     }
     
-    func testKeyGeneratorGetKeys() {
-        let initialKey = DESBlock(bytes: [0b00110001, 0b00110010, 0b00110011, 0b00110100, 0b00110101, 0b00110110, 0b00110111, 0b00111000])
-        let keyGenerator = KeyGenerator(initialKey: initialKey)
-    }
     
     func testDESBlockPermutated() {
         var block = DESBlock(bytes: [0b00110001])

@@ -50,6 +50,10 @@ class DESEncryptor {
         return blocks.compactMap { $0.encrypted(withKeys: keys!) }
     }
     
+    private func getDecryptedBlocks() -> [DESBlock] {
+        return blocks.compactMap { $0.decrypted(withKeys: keys!) }
+    }
+    
     private func splitMessageOnBlocks(withBitCount blockSize: Int) -> [DESBlock] {
         let bytes = DESEncryptor.getBytes(fromString: self.message)
         let supplementedArrayOfBytes = DESEncryptor.supplementArrayOfBytes(bytes, toBitCountMultiplicityOf: blockSize)

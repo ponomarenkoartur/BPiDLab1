@@ -66,5 +66,20 @@ class DESBlock: Block {
         
         return block
     }
+    
+    public func splittingIntoBlocks(withSize blockSize: Int) -> [Block] {
+        var blocks: [Block] = []
+        
+        var block = Block(bitsCount: blockSize)
+        for (bitIndex, bit) in self.enumerated() {
+            if bitIndex % 8 == 0, bitIndex != 0 {
+                blocks.append(block)
+                block = Block(bitsCount: blockSize)
+            }
+            block[bitIndex % 8] = bit
+        }
+        
+        return blocks
+    }
 
 }

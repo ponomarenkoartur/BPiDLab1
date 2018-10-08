@@ -31,17 +31,12 @@ class DESEncryptor {
     
     // MARK: - Static Methods
     
-    private func splitMessage(_ message: String, onBlocksWithByteCount blockSize: Int) -> [Block] {
-        var blocks: [Block] = []
+    private func splitMessageOnBlocks(withBitCount blockSize: Int) -> [DESBlock] {
         let bytes = getBytesFromMessage()
         let supplementedArrayOfBytes = DESEncryptor.supplementArrayOfBytes(bytes, toBitCountMultiplicityOf: blockSize)
         
-        for i in 0..<(supplementedArrayOfBytes.count / 8) {
-            let blockBytes = Array(supplementedArrayOfBytes[i..<(i+blockSize)])
-            blocks.append(Block(bytes: blockBytes))
-        }
-        
-        return blocks
+        let blockOfAllBits = DESBlock(bytes: supplementedArrayOfBytes )
+        return blockOfAllBits.splittingIntoBlocks(withSize: blockSize)
     }
     
     private static func supplementArrayOfBytes(_ bytes: [UInt8], toBitCountMultiplicityOf count: Int) -> [UInt8] {

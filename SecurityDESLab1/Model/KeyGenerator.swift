@@ -28,8 +28,9 @@ class KeyGenerator {
     private func getKeys() -> [DESBlock] {
         var keys: [DESBlock] = []
         
-        var c = DESBlock(block: initialKey.leftPart).permutated(withPermutationTable: DESTable.cPermutation)!
-        var d = DESBlock(block: initialKey.rightPart).permutated(withPermutationTable: DESTable.dPermutation)!
+        let initialPermutated = initialKey.permutated(withPermutationTable: DESTable.initialKeyPermutation)!
+        var c = initialPermutated.leftPart
+        var d = initialPermutated.rightPart
         
         for j in 0..<16 {
             c = DESBlock(block: c <<< DESTable.keyShift[j])

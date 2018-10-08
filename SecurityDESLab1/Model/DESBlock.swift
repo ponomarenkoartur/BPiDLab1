@@ -37,7 +37,7 @@ class DESBlock: Block {
             return nil
         }
         let permutatedSize = permutationTable.count
-        let permutated = DESBlock(bytes: [UInt8](repeating: 0, count: 8))
+        let permutated = DESBlock(bitsCount: permutatedSize)
         for bitPosition in 0..<permutatedSize {
             let positionInTable = permutationTable[bitPosition] - 1
             permutated[bitPosition] = self[positionInTable]!

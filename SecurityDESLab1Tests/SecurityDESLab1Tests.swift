@@ -68,9 +68,9 @@ class SecurityDESLab1Tests: XCTestCase {
     
     func testBlockRangeSubscript() {
         let block = Block(bytes: [0b00000000, 0b11111111])
-        let slice = block[4..<12]
+        let slice = block[3..<11]
         print(slice)
-        XCTAssert(slice == Block(bytes: [0b00001111]))
+        XCTAssert(slice == Block(bytes: [0b00011111]))
     }
     
     func testBlockClosedRangeSubscript() {
@@ -96,6 +96,30 @@ class SecurityDESLab1Tests: XCTestCase {
         XCTAssert(block <<< 4 == Block(bytes: [0b00001111, 0b11110000]))
         XCTAssert(block >>> 4 == Block(bytes: [0b11110000, 0b00001111]))
         XCTAssert(block >>> 8 == Block(bytes: [0b11111111, 0b00000000]))
+    }
+    
+    func testKeyGeneratorGetKeys() {
+        let initialKey = DESBlock(bytes: [0b00110001, 0b00110010, 0b00110011, 0b00110100, 0b00110101, 0b00110110, 0b00110111, 0b00111000])
+        let keyGenerator = KeyGenerator(initialKey: initialKey)
+    }
+    
+    func testDESBlockPermutated() {
+        var block = DESBlock(bytes: [0b00110001])
+        var permutationTable = [8, 7, 6, 5, 4, 3, 2, 1]
+        var permutated = block.permutated(withPermutationTable: permutationTable)!
+        XCTAssert(permutated == DESBlock(bytes: [0b10001100]))
+        
+        permutationTable = [8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1]
+        permutated = block.permutated(withPermutationTable: permutationTable)!
+        XCTAssert(permutated == DESBlock(bytes: [0b10001100, 0b10001100]))
+        
+        block = DESBlock(bytes: [0b00110001, 0b00110001])
+        permutationTable = [1, 2, 3, 4, 5, 6, 7, 8]
+        permutated = block.permutated(withPermutationTable: permutationTable)!
+        XCTAssert(permutated == DESBlock(bytes: [0b00110001]))
+        
+        block = DESBlock(bytes: [0b00110001, 0b00110010, 0b00110011, 0b00110100, 0b00110101, 0b00110110, 0b00110111, 0b00111000])
+        permutated = block.permutated(withPermutationTable: DESTable.initialKeyPermutation)!
     }
 
     func testPerformanceExample() {

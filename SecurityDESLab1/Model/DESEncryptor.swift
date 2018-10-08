@@ -15,6 +15,7 @@ class DESEncryptor {
         }
     }
     private lazy var blocks = splitMessageOnBlocks(withBitCount: 64)
+    private lazy var encryptedBlocks = getEncryptedBlocks()
     private lazy var keys = getKeys()
     
     // MARK: Initialization
@@ -27,7 +28,6 @@ class DESEncryptor {
     // MARK: - Methods
     
     func encryptMessage() -> String {
-        let encryptedBlocks = blocks.compactMap { $0.encrypted(withKeys: keys!) }
         return encryptedBlocks.compactMap { $0.convertToString(encoding: .utf8) }.reduce("") { $0 + $1 }
     }
     
@@ -46,11 +46,13 @@ class DESEncryptor {
         return keyGenerator?.getKeys()
     }
     
+    private func getEncryptedBlocks() -> [DESBlock] {
+        return blocks.compactMap { $0.encrypted(withKeys: keys!) }
+    }
     
     private func splitMessageOnBlocks(withBitCount blockSize: Int) -> [DESBlock] {
         let bytes = DESEncryptor.getBytes(fromString: self.message)
         let supplementedArrayOfBytes = DESEncryptor.supplementArrayOfBytes(bytes, toBitCountMultiplicityOf: blockSize)
-        
         let blockOfAllBits = DESBlock(bytes: supplementedArrayOfBytes )
         return blockOfAllBits.splittingIntoBlocks(withSize: blockSize)
     }

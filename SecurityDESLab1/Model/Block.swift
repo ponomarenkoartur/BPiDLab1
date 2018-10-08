@@ -228,7 +228,10 @@ extension Block: Equatable {
 extension Block: CustomStringConvertible {
     public var description: String {
         var description = ""
-        for bit in self {
+        for (bitIndex, bit) in self.enumerated() {
+            if bitIndex % 4 == 0, bitIndex != 0 {
+                description += " "
+            }
             description += bit.description
         }
         return description

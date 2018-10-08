@@ -16,6 +16,7 @@ class DESEncryptor {
     }
     private lazy var blocks = splitMessageOnBlocks(withBitCount: 64)
     private lazy var encryptedBlocks = getEncryptedBlocks()
+    private lazy var decryptedBlocks = getDecryptedBlocks()
     private lazy var keys = getKeys()
     
     // MARK: Initialization
@@ -32,7 +33,7 @@ class DESEncryptor {
     }
     
     func decryptMessage() -> String {
-        return message
+        return decryptedBlocks.compactMap { $0.convertToString(encoding: .utf8) }.reduce("") { $0 + $1 }
     }
     
     // MARK: - Private methods

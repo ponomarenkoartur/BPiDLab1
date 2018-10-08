@@ -9,14 +9,11 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    // MARK: - Properties
-    
-    let desEncryptor = DESEncryptor(message: "")
     
     // MARK: - Outlets
     
     @IBOutlet weak var messageTextField: UITextField!
+    @IBOutlet weak var keyTextField: UITextField!
     
     @IBOutlet var resultLabels: [UILabel]!
     
@@ -42,7 +39,8 @@ class ViewController: UIViewController {
     // MARK: - Methods
     
     func encryptAndDecryptMessage() {
-        desEncryptor.message = messageTextField.text ?? ""
+        let desEncryptor = DESEncryptor(message: messageTextField.text!, keyPhrase: keyTextField.text!)
+        
         encryptedMessageLabel.text = desEncryptor.encryptMessage()
         decryptedMessageLabel.text = desEncryptor.decryptMessage()
         showResultLabels()

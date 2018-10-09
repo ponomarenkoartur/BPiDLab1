@@ -40,10 +40,13 @@ class ViewController: UIViewController {
     
     func encryptAndDecryptMessage() {
         let desEncryptor = DESEncryptor(message: messageTextField.text!, keyPhrase: keyTextField.text!)
-        
         encryptedMessageLabel.text = desEncryptor.encryptMessage()
         decryptedMessageLabel.text = desEncryptor.decryptMessage()
         showResultLabels()
+        
+        for (blockIndex, entropies) in desEncryptor.getEntropiesOfEncryptedBlocks().enumerated() {
+            print("\(blockIndex): \(entropies)")
+        }
     }
     
     func showResultLabels() {

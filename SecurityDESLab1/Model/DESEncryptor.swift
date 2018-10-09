@@ -36,6 +36,14 @@ class DESEncryptor {
         return decryptedBlocks.compactMap { $0.convertToString(encoding: .utf8) }.reduce("") { $0 + $1 }
     }
     
+    func getEntropiesOfEncryptedBlocks() -> [[Double]] {
+        var entropiesOfBlocks: [[Double]] = []
+        for block in encryptedBlocks {
+            entropiesOfBlocks.append(block.entropies)
+        }
+        return entropiesOfBlocks
+    }
+    
     // MARK: - Private methods
     
     private func getKeys() -> [DESBlock]? {
@@ -69,15 +77,9 @@ class DESEncryptor {
     }
     
     private static func supplementArrayOfBytes(_ bytes: [UInt8], toBitCountMultiplicityOf countMultiplicity: Int) -> [UInt8] {
-        var supplementedArray: [UInt8] = bytes
         let bitCount = bytes.count * 8
-        
         let countOfBytesToSupplement = (countMultiplicity.getMultiple(greaterThan: bitCount) / Constants.countOfBitsInByte) - bytes.count
-        
-        for _ in 0..<countOfBytesToSupplement {
-            supplementedArray.append(UInt8())
-        }
-        return supplementedArray
+        return bytes + [UInt8](repeating: 0, count: countOfBytesToSupplement)
     }
     
     private static func supplementArrayOfBytes(_ bytes: [UInt8], toByteCountMultiplicityOf count: Int) -> [UInt8] {

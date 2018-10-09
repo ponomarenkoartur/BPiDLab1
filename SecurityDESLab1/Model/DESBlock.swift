@@ -10,15 +10,7 @@ import Foundation
 
 class DESBlock: Block {
     
-    // MARK: - Computed Properties
-    
-    var entropy: Double {
-        let onesCount = self.reduce(0) { $0 + $1.rawValue }
-        let pOne = Double(onesCount) / Double(bitsCount)
-        let pZero = 1 - pOne
-        let entropy = -1 * (pOne * log2(pOne) + pZero * log2(pZero))
-        return entropy
-    }
+    var entropies: [Double] = []
     
     // MARK: - Methods
     
@@ -36,6 +28,9 @@ class DESBlock: Block {
             block = DESBlock(block: leftPart ^ resultOfFeistailFunc)
             leftPart = rightPart
             rightPart = block
+            
+            // calculating entropy on current encoding iteration
+            entropies.append(DESBlock(blocks: [leftPart, rightPart]).getEntropy())
         }
         
         block = DESBlock(blocks: [rightPart, leftPart])
@@ -103,6 +98,13 @@ class DESBlock: Block {
         }
         
         return blocks
+    }
+    
+    private func getEntropy() -> Double {
+        let onesCount = self.reduce(0) { $0 + $1.rawValue }
+        let pOne = Double(onesCount) / Double(bitsCount)
+        let pZero = 1 - pOne
+        return -1 * (pOne * log2(pOne) + pZero * log2(pZero))
     }
     
     // MARK: - Static Methods

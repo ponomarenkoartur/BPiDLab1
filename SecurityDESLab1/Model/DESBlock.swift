@@ -6,7 +6,19 @@
 //  Copyright © 2018 Artur. All rights reserved.
 //
 
+import Foundation
+
 class DESBlock: Block {
+    
+    // MARK: - Computed Properties
+    
+    var entropy: Double {
+        let onesCount = self.reduce(0) { $0 + $1.rawValue }
+        let pOne = Double(onesCount) / Double(bitsCount)
+        let pZero = 1 - pOne
+        let entropy = -1 * (pOne * log2(pOne) + pZero * log2(pZero))
+        return entropy
+    }
     
     // MARK: - Methods
     

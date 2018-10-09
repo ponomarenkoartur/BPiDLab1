@@ -119,12 +119,8 @@ public class Block {
     
     // MARK: Methods
     
-    public func convertToString(encoding: String.Encoding) -> String? {
-        var string = ""
-        for byte in self.bytes {
-            string += String(bytes: [byte], encoding: encoding) ?? "?"
-        }
-        return string
+    public func convertToString(encoding: String.Encoding) -> String {
+        return self.bytes.reduce("") { $0 + (String(bytes: [$1], encoding: encoding) ?? "?") }
     }
     
     private func supplement(toBitCount bitsCount: Int) {

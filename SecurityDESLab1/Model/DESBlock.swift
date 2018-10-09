@@ -104,7 +104,8 @@ class DESBlock: Block {
         let onesCount = self.reduce(0) { $0 + $1.rawValue }
         let pOne = Double(onesCount) / Double(bitsCount)
         let pZero = 1 - pOne
-        return -1 * (pOne * log2(pOne) + pZero * log2(pZero))
+        let p = [pOne, pZero]
+        return p.reduce(0) { $0 + $1 * log2(1 / $1) }
     }
     
     // MARK: - Static Methods
